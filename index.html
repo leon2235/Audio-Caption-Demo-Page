@@ -9,7 +9,7 @@
 --accent:#4f46e5;--accent-bg:#eef2ff;--gold:#b45309;--gold-bg:#fffbeb}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-background:var(--bg);color:var(--ink)}
+background:var(--bg);color:var(--ink);font-size:17px}
 .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
 
 /* ---- language fab & gradient page header (Cayman style) ---- */
@@ -22,38 +22,38 @@ background-image:linear-gradient(60deg,#312e81,#4f46e5)}
 .project-name{margin:0;font-size:2.5rem;font-weight:700;line-height:1.25}
 .project-tagline{margin:.7rem 0 0;font-weight:normal;opacity:.75;font-size:1.05rem}
 .quicknav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.7rem}
-.quicknav .btn{display:inline-block;padding:8px 18px;border-radius:.4rem;font-size:13.5px;font-weight:600;
+.quicknav .btn{display:inline-block;padding:8px 18px;border-radius:.4rem;font-size:14.5px;font-weight:600;
 color:rgba(255,255,255,.85);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);
 text-decoration:none;transition:all .2s}
 .quicknav .btn:hover{background:rgba(255,255,255,.2);color:#fff;text-decoration:none}
 /* ---- title, authors & abstract ---- */
 .titleblock{text-align:center;padding-top:2.2rem}
-.titleblock h1{font-size:1.85em;font-weight:normal;line-height:1.45;max-width:920px;margin:0 auto 1.3rem;color:var(--ink)}
-.author-block{text-align:center;font-size:15px;line-height:1.9}
+.author-block{text-align:center;font-size:17.5px;line-height:1.9}
 .author-block sup{color:var(--accent)}
-.author-block .affil,.author-block .thanks{color:var(--sub);font-size:12.5px}
+.author-block .affil{color:var(--sub);font-size:14.5px}
+.author-block .thanks{color:var(--sub);font-size:12.5px}
 .main-content h2{color:#7c3aed;font-weight:700;font-size:1.65em;margin:2.2rem 0 1rem}
-.abstract-p{font-size:1.02em;line-height:1.85;color:#2a3140;text-align:justify}
+.abstract-p{font-size:1.08em;line-height:1.85;color:#2a3140;text-align:justify}
 .abstract-p b{color:var(--ink)}
 /* ---- sections ---- */
 section{padding-top:26px}
 hr.divider{height:1px;border:0;margin:6px 0 0;background:#7c3aed}
 .sec-head{margin-bottom:14px}
-.sec-head p{color:var(--sub);font-size:13.5px;line-height:1.7}
+.sec-head p{color:var(--sub);font-size:15px;line-height:1.7}
 button{border:1px solid var(--line);background:var(--card);border-radius:8px;
-padding:8px 14px;font-size:13px;cursor:pointer;color:var(--ink)}
+padding:8px 14px;font-size:14px;cursor:pointer;color:var(--ink)}
 button:hover{border-color:#c3cad6}
 button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .legend{background:var(--card);border:1px solid var(--line);border-radius:10px;
-padding:13px 16px;font-size:13px;margin-bottom:22px;line-height:1.9}
+padding:13px 16px;font-size:14.5px;margin-bottom:22px;line-height:1.9}
 .legend b{color:var(--accent)}
 
 /* ---- sample cards ---- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
 padding:20px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .text{background:#f8fafc;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
-padding:10px 12px;font-size:14px;line-height:1.8;margin-bottom:10px}
-.cap{font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:14px}
+padding:10px 12px;font-size:15.5px;line-height:1.8;margin-bottom:10px}
+.cap{font-size:14px;color:var(--sub);line-height:1.7;margin-bottom:14px}
 .cap .tag{display:inline-block;background:var(--accent-bg);color:var(--accent);
 border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
@@ -61,7 +61,7 @@ border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:600}
 .cell{display:flex;flex-direction:column;gap:6px;padding:10px 8px;border-radius:10px;
 border:1px solid transparent;background:#fff;min-width:0}
 .cell.star{background:var(--gold-bg);border-color:#fde68a}
-.badge{text-align:center;font-size:12.5px;font-weight:600;white-space:nowrap;
+.badge{text-align:center;font-size:13.5px;font-weight:600;white-space:nowrap;
 overflow:hidden;text-overflow:ellipsis}
 .badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;
 margin-right:4px;background:#9ca3af;vertical-align:1px}
@@ -73,32 +73,37 @@ color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
 /* ---- section 3: audiobook captions ---- */
 .ab-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px}
 .ab-panel audio{width:100%;height:38px;display:block}
-.ab-now{margin-top:8px;min-height:20px;color:var(--gold);font-size:13.5px;font-variant-numeric:tabular-nums}
+.ab-now{margin-top:8px;min-height:20px;color:var(--gold);font-size:14.5px;font-variant-numeric:tabular-nums}
 .ab-btns{margin-top:8px}
 .timeline{margin-top:4px}
 .sentinel{height:0}
+.group{padding:10px 12px;border:1px solid transparent;border-radius:12px;
+transition:background .25s,border-color .25s,box-shadow .25s}
+.group.wrapped{background:#f3efff;border-color:#a78bfa;box-shadow:0 8px 24px rgba(124,58,237,.22)}
 .group+.group{margin-top:20px}
 .grouphead{position:sticky;z-index:40;top:8px;display:flex;align-items:baseline;gap:10px;padding:9px 12px;background:#eef1f5;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:7px;cursor:pointer;transition:box-shadow .12s}
 .grouphead.stuck{box-shadow:0 8px 20px rgba(31,36,48,.16)}
 .grouphead:hover{box-shadow:0 0 0 2px var(--gold)}
 .grouphead.playing{box-shadow:0 0 0 2px var(--gold),0 6px 18px rgba(31,36,48,.16)}
 .gbadge{flex:none;font-weight:700;color:#a06d10}
-.gtext{font-size:13px;line-height:1.6}
-.gmeta{margin-left:auto;flex:none;color:var(--sub);font-size:12px;white-space:nowrap}
+.gtext{font-size:14.5px;line-height:1.6}
+.gmeta{margin-left:auto;flex:none;color:var(--sub);font-size:13px;white-space:nowrap}
 .cards{display:grid;gap:10px;margin-top:10px}
 .block{border:1px solid rgba(31,36,48,.1);border-left-width:5px;border-radius:7px;background:var(--card);cursor:pointer}
-.block:hover,.block.playing{box-shadow:0 0 0 2px var(--gold)}
-.block.playing{box-shadow:0 0 0 2px var(--gold),0 6px 18px rgba(31,36,48,.16)}
-.bmeta{display:flex;align-items:center;gap:8px;padding:6px 10px 3px;font-size:12.5px;white-space:nowrap;overflow:hidden}
+.block:hover{box-shadow:0 0 0 2px var(--gold)}
+.block.playing{background:#fffbeb;border-color:var(--gold);
+box-shadow:0 0 0 2px var(--gold),0 8px 20px rgba(180,83,9,.18)}
+.block.playing .bmeta::after{content:'\25B6';margin-left:auto;color:var(--gold);font-size:14px;font-weight:700}
+.bmeta{display:flex;align-items:center;gap:8px;padding:6px 10px 3px;font-size:13.5px;white-space:nowrap;overflow:hidden}
 .spk{flex:none;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:650;color:#fff}
 .btime{color:#3b6ea5;font-variant-numeric:tabular-nums}
 .bdur{color:var(--sub);font-variant-numeric:tabular-nums}
-.bcap{padding:5px 10px 6px;color:#333a46;font-size:13.5px;line-height:1.6;overflow-wrap:anywhere}
+.bcap{padding:5px 10px 6px;color:#333a46;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
 .bcap+.bcap{border-top:1px solid rgba(31,36,48,.08)}
 .bcap .k{display:inline-block;min-width:58px;color:#3b6ea5;font-weight:700}
-.bcap.tmb{color:#8a6a15;font-size:13px}
-.bcap.ins{color:#3f5f8a;font-size:13px}
-@media(max-width:860px){.project-name{font-size:1.7rem}.titleblock h1{font-size:1.4em}.gmeta{display:none}.bcap{font-size:13px}}
+.bcap.tmb{color:#8a6a15;font-size:14px}
+.bcap.ins{color:#3f5f8a;font-size:14px}
+@media(max-width:860px){.project-name{font-size:1.7rem}.gmeta{display:none}.bcap{font-size:13px}}
 @media(max-width:860px){.grid,.sec-ablation .grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -119,8 +124,7 @@ color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
 <div class="wrap main-content">
 
 <div class="titleblock">
-  <h1 data-i18n="h1">From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation</h1>
-  <div class="author-block" data-i18n="authors">李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、徐向民<sup>1</sup>、吴斌<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span></div>
+  <div class="author-block" data-i18n="authors">李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup>、吴斌<sup>2</sup>、徐向民<sup>1</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span></div>
 </div>
 
 <section id="sec-abstract">
@@ -136,49 +140,49 @@ color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
     <h2><span data-i18n="s1t">1. 音色设计展示（Voice Design）</span></h2>
     <p data-i18n="s1d">7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。</p>
   </div>
-  <div class="legend" data-i18n="s1legend"><b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）</div>
+  <div class="legend" data-i18n="s1legend"><b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）</div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调偏低、低沉沙哑的老年男声，沧桑内敛、饱含阅历，适合人生纪实节目或岁月回忆旁白。</div>
     <div class="text">回头看去，那些走过的弯路，也早已成为人生的一部分。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group31/moss_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group31/pool_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group31/qwen_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group31/voxcpm2_0031.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group31/ours_030.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group31/moss_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group31/pool_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group31/qwen_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group31/voxcpm2_0031.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group31/ours_030.wav"></audio></div></div>
   </div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调适中、清雅从容的中年女声，端庄知性、气质优雅，适合文化品牌代言或人文内容旁白。</div>
     <div class="text">美并非浮于表面，它源于内在修养与经年累月的沉淀。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group70/moss_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group70/pool_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group70/qwen_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group70/voxcpm2_0070.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group70/ours_069.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group70/moss_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group70/pool_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group70/qwen_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group70/voxcpm2_0070.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group70/ours_069.wav"></audio></div></div>
   </div>
 
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调较高、语气神气十足的男孩嗓音，正义感强、爱扮英雄，适合英雄主题动画或男童玩具广告。</div>
     <div class="text">别害怕，超级小队长来了，我一定会保护大家！</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group59/moss_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group59/pool_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group59/qwen_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group59/voxcpm2_0059.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group59/ours_058.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group59/moss_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group59/pool_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group59/qwen_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group59/voxcpm2_0059.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group59/ours_058.wav"></audio></div></div>
   </div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调适中、坚定热忱的少年男声，青春昂扬、正直向上，适合励志成长短片或正能量宣传。</div>
     <div class="text">也许我们现在还不够强大，但努力会让梦想一点点靠近。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group46/moss_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group46/pool_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group46/qwen_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group46/voxcpm2_0046.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group46/ours_045.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group46/moss_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group46/pool_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group46/qwen_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group46/voxcpm2_0046.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group46/ours_045.wav"></audio></div></div>
   </div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调偏低、磁性浑厚的青年男声，深沉性感、富有魅力，适合男士护理广告或成熟向影视配音。</div>
     <div class="text">无需刻意证明，真正的魅力，自会在细节中显现。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group51/moss_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group51/pool_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group51/qwen_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group51/voxcpm2_0051.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group51/ours_050.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group51/moss_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group51/pool_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group51/qwen_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group51/voxcpm2_0051.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group51/ours_050.wav"></audio></div></div>
   </div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调适中、慈和温暖的中年女声，温柔亲切、包容体贴，适合家庭温情广告或母婴健康内容。</div>
     <div class="text">成长不必着急，我们会用耐心陪伴孩子走好每一步。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group63/moss_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group63/pool_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group63/qwen_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group63/voxcpm2_0063.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group63/ours_062.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group63/moss_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group63/pool_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group63/qwen_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group63/voxcpm2_0063.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group63/ours_062.wav"></audio></div></div>
   </div>
 
   <div class="card">
     <div class="cap"><span class="tag">音色描述</span>音调适中、柔和苍老的老年女声，慈祥温暖、朴实自然，适合民间故事或亲子传承类有声书。</div>
     <div class="text">从前啊，村口有一棵大槐树，树下藏着许多旧时光。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group17/moss_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group17/pool_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group17/qwen_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group17/voxcpm2_0017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group17/ours_016.wav"></audio></div></div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group17/moss_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group17/pool_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group17/qwen_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group17/voxcpm2_0017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group17/ours_016.wav"></audio></div></div>
   </div>
 
   </section>
@@ -319,14 +323,13 @@ color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
 /* ---------- i18n (UI only; sample data stays as-is) ---------- */
 var I18N={
  zh:{nav1:"① 音色描述试听",nav2:"② Caption 消融试听",
-     h1:"From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation",
      tagline:"面向有声书生成的 Local-to-Global Captioning · 在线试听 Demo",
      abt:"摘要",
      abstract:"专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。",
-     authors:"李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、徐向民<sup>1</sup>、吴斌<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span>",
+     authors:"李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup>、吴斌<sup>2</sup>、徐向民<sup>1</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span>",
      s1t:"1. 音色设计展示（Voice Design）",
      s1d:"7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。",
-     s1legend:"<b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）",
+     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）",
      s2t:"2. Caption消融及对比展示",
      s2d:"5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。",
      s2legend:"<b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）",
@@ -337,14 +340,13 @@ var I18N={
      abplayall:"播放整段",
      footer:"ICASSP 投稿配套试听页 · 静态站点（GitHub Pages）"},
  en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
-     h1:"From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation",
      tagline:"Local-to-Global Captioning for Audiobook Generation · Listening Demo",
      abt:"Abstract",
      abstract:"Professional audiobook recordings provide rich examples of character voices and expressive delivery. However, captioning them involves a trade-off between granularity and context: chapter-level captioning tends to produce coarse descriptions, while segment-level captioning often misses the surrounding narrative. To address this problem, we propose a <b>local-to-global captioning pipeline</b>. It first analyzes individual speech segments and then uses their temporally ordered transcripts and captions to infer the chapter-level scene context. The pipeline annotates each segment along four dimensions: <b>timbre, text, scene, and instruct</b>. Together, these annotations connect vocal performance with the surrounding narrative without requiring the entire chapter audio to be captioned at once. We use these annotations to train <b>Text-to-Timbre</b>, which generates speaker embeddings from voice descriptions, and <b>Scene-Instruct-TTS</b>, which synthesizes speech from narrative scenes and delivery instructions. In human evaluation, our system achieves the highest mean scores for <b>character matching (3.72)</b> and <b>contextual appropriateness (3.86)</b> among the compared systems.",
-     authors:"Yangbiao Li<sup>1*</sup>, Zhenchuan Yang<sup>2*</sup>, Xiaofen Xing<sup>1†</sup>, Liufei Xie<sup>2</sup>, Hua Hua<sup>2</sup>, Meng Chen<sup>2</sup>, Xiangmin Xu<sup>1</sup>, Bin Wu<sup>2</sup>, Xinran Sun<sup>2</sup>, Kan Luo<sup>3</sup><br><span class='affil'><sup>1</sup>South China University of Technology　<sup>2</sup>Tencent Music Entertainment　<sup>3</sup>University of Electronic Science and Technology of China</span><br><span class='thanks'>*Equal contribution　†Corresponding author: Xiaofen Xing</span>",
+     authors:"Yangbiao Li<sup>1*</sup>, Zhenchuan Yang<sup>2*</sup>, Xiaofen Xing<sup>1†</sup>, Liufei Xie<sup>2</sup>, Hua Hua<sup>2</sup>, Meng Chen<sup>2</sup>, Xinran Sun<sup>2</sup>, Kan Luo<sup>3</sup>, Bin Wu<sup>2</sup>, Xiangmin Xu<sup>1</sup><br><span class='affil'><sup>1</sup>South China University of Technology　<sup>2</sup>Tencent Music Entertainment　<sup>3</sup>University of Electronic Science and Technology of China</span><br><span class='thanks'>*Equal contribution　†Corresponding author: Xiaofen Xing</span>",
      s1t:"1. Voice Design",
      s1d:"7 groups. Within each group, 5 systems synthesize the same text with the same timbre description, for comparison of timbre similarity and perceptual quality.",
-     s1legend:"<b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours (highlighted in gold)",
+     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours (highlighted in gold)",
      s2t:"2. Caption Ablation and Comparison",
      s2d:"5 groups. Within each group, 6 audios of the same text are synthesized under three caption configurations (none / instruction only / scene + instruction), showing the effect of scene and instruction captions on expressiveness and scene matching.",
      s2legend:"<b>VoxCPM2</b>: no caption　<b>VoxCPM2-I</b>: instruction caption only　<b>VoxCPM2-SI</b>: scene + instruction captions<br><b>Ours w/o S-I</b>: no caption　<b>Ours w/o S</b>: instruction caption only　<b>Ours</b>: scene + instruction captions (full)",
@@ -379,6 +381,46 @@ if('IntersectionObserver' in window){
     });
   },{rootMargin:'-8px 0px 0px 0px',threshold:0});
   Array.prototype.forEach.call(document.querySelectorAll('.sentinel'),function(s){abIO.observe(s);});
+}
+/* wrapped highlight: the scene group currently scrolled under its sticky header */
+var abGroups=Array.prototype.slice.call(document.querySelectorAll('#sec-audiobook .group'));
+function updateWrap(){
+  var cur=null;
+  abGroups.forEach(function(grp){
+    var sent=grp.querySelector('.sentinel');
+    if(sent&&sent.getBoundingClientRect().top<=9)cur=grp;
+  });
+  abGroups.forEach(function(grp){grp.classList.toggle('wrapped',grp===cur);});
+}
+var wrapTick=false;
+window.addEventListener('scroll',function(){
+  if(!wrapTick){wrapTick=true;requestAnimationFrame(function(){updateWrap();wrapTick=false;});}
+},{passive:true});
+window.addEventListener('resize',updateWrap);
+updateWrap();
+function abMmss(t){var m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0':'')+s;}
+document.getElementById('ab-playall').onclick=function(){
+  abStopAt=null;abPlayer.currentTime=0;abPlayer.play();
+  abNow.textContent='▶ 0:00 – 4:52';
+};
+function abPlay(id){
+  var d=AB_DATA[id];if(!d)return;
+  abStopAt=d.end;
+  if(abCur)abCur.classList.remove('playing');
+  abCur=document.getElementById('card_'+id);
+  if(abCur)abCur.classList.add('playing');
+  var tScene=(lang==='zh')?'场景':'Scene',tSpk=(lang==='zh')?'说话人':'Speaker';
+  if(d.group){abNow.textContent='▶ '+tScene+' '+d.scene_id+'  '+abMmss(d.start)+' – '+abMmss(d.end);}
+  else{abNow.textContent='▶ '+tSpk+' '+d.spk+'  '+abMmss(d.start)+' – '+abMmss(d.end)+'  ('+d.dur.toFixed(1)+'s)';}
+  var didSeek=false;
+  function go(){
+    if(didSeek)return;didSeek=true;
+    try{abPlayer.currentTime=Math.max(0,d.start-AB_PREROLL);}catch(e){}
+    var pr=abPlayer.play();
+    if(pr&&pr.catch){pr.catch(function(){abNow.textContent=(lang==='zh')?'浏览器阻止自动播放，请再点一次该片段':'Autoplay blocked, please click the segment again';});}
+  }
+  if(abPlayer.readyState>=1){go();}
+  else{abPlayer.addEventListener('loadedmetadata',go,{once:true});abPlayer.addEventListener('canplay',go,{once:true});try{abPlayer.load();}catch(e){}}
 }
 abPlayer.addEventListener('timeupdate',function(){
   if(abStopAt!==null&&abPlayer.currentTime>=abStopAt){abPlayer.pause();abStopAt=null;}
