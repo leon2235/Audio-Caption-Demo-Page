@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening Samples · From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation</title>
+<style>
+--bg:#ffffff;--card:#fafafa;--ink:#1c2333;--sub:#6b7280;--line:#e5e7eb;
+--accent:#4f46e5;--accent-bg:#eef2ff;--gold:#b45309;--gold-bg:#fffbeb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--ink)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+/* ---- language fab & gradient page header (Cayman style) ---- */
+.lang-fab{position:fixed;top:20px;right:20px;z-index:999;background:var(--accent);
+color:#fff;border:none;padding:10px 16px;border-radius:22px;font-size:13.5px;
+font-weight:700;cursor:pointer;box-shadow:0 4px 10px rgba(49,46,129,.3);transition:background .2s}
+.lang-fab:hover{background:#4338ca}
+.page-header{color:#fff;text-align:center;padding:4rem 2rem 3.4rem;
+background-image:linear-gradient(60deg,#312e81,#4f46e5)}
+.project-name{margin:0;font-size:2.5rem;font-weight:700;line-height:1.25}
+.project-tagline{margin:.7rem 0 0;font-weight:normal;opacity:.75;font-size:1.05rem}
+.quicknav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.7rem}
+.quicknav .btn{display:inline-block;padding:8px 18px;border-radius:.4rem;font-size:13.5px;font-weight:600;
+color:rgba(255,255,255,.85);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);
+text-decoration:none;transition:all .2s}
+.quicknav .btn:hover{background:rgba(255,255,255,.2);color:#fff;text-decoration:none}
+/* ---- title, authors & abstract ---- */
+.titleblock{text-align:center;padding-top:2.2rem}
+.titleblock h1{font-size:1.85em;font-weight:normal;line-height:1.45;max-width:920px;margin:0 auto 1.3rem;color:var(--ink)}
+.author-block{text-align:center;font-size:15px;line-height:1.9}
+.author-block sup{color:var(--accent)}
+.author-block .affil,.author-block .thanks{color:var(--sub);font-size:12.5px}
+.main-content h2{color:#7c3aed;font-weight:700;font-size:1.65em;margin:2.2rem 0 1rem}
+.abstract-p{font-size:1.02em;line-height:1.85;color:#2a3140;text-align:justify}
+.abstract-p b{color:var(--ink)}
+/* ---- sections ---- */
+section{padding-top:26px}
+hr.divider{height:1px;border:0;margin:6px 0 0;background:#7c3aed}
+.sec-head{margin-bottom:14px}
+.sec-head p{color:var(--sub);font-size:13.5px;line-height:1.7}
+button{border:1px solid var(--line);background:var(--card);border-radius:8px;
+padding:8px 14px;font-size:13px;cursor:pointer;color:var(--ink)}
+button:hover{border-color:#c3cad6}
+button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:10px;
+padding:13px 16px;font-size:13px;margin-bottom:22px;line-height:1.9}
+.legend b{color:var(--accent)}
+
+/* ---- sample cards ---- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:20px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.text{background:#f8fafc;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+padding:10px 12px;font-size:14px;line-height:1.8;margin-bottom:10px}
+.cap{font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:14px}
+.cap .tag{display:inline-block;background:var(--accent-bg);color:var(--accent);
+border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sec-ablation .grid{grid-template-columns:repeat(6,1fr)}
+.cell{display:flex;flex-direction:column;gap:6px;padding:10px 8px;border-radius:10px;
+border:1px solid transparent;background:#fff;min-width:0}
+.cell.star{background:var(--gold-bg);border-color:#fde68a}
+.badge{text-align:center;font-size:12.5px;font-weight:600;white-space:nowrap;
+overflow:hidden;text-overflow:ellipsis}
+.badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;
+margin-right:4px;background:#9ca3af;vertical-align:1px}
+.badge.star .dot{background:var(--gold)}
+.badge.star{color:var(--gold)}
+.cell audio{width:100%;height:32px}
+footer{margin-top:36px;padding:22px 0 30px;text-align:center;
+color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
+/* ---- section 3: audiobook captions ---- */
+.ab-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px}
+.ab-panel audio{width:100%;height:38px;display:block}
+.ab-now{margin-top:8px;min-height:20px;color:var(--gold);font-size:13.5px;font-variant-numeric:tabular-nums}
+.ab-btns{margin-top:8px}
+.timeline{margin-top:4px}
+.sentinel{height:0}
+.group+.group{margin-top:20px}
+.grouphead{position:sticky;z-index:40;top:8px;display:flex;align-items:baseline;gap:10px;padding:9px 12px;background:#eef1f5;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:7px;cursor:pointer;transition:box-shadow .12s}
+.grouphead.stuck{box-shadow:0 8px 20px rgba(31,36,48,.16)}
+.grouphead:hover{box-shadow:0 0 0 2px var(--gold)}
+.grouphead.playing{box-shadow:0 0 0 2px var(--gold),0 6px 18px rgba(31,36,48,.16)}
+.gbadge{flex:none;font-weight:700;color:#a06d10}
+.gtext{font-size:13px;line-height:1.6}
+.gmeta{margin-left:auto;flex:none;color:var(--sub);font-size:12px;white-space:nowrap}
+.cards{display:grid;gap:10px;margin-top:10px}
+.block{border:1px solid rgba(31,36,48,.1);border-left-width:5px;border-radius:7px;background:var(--card);cursor:pointer}
+.block:hover,.block.playing{box-shadow:0 0 0 2px var(--gold)}
+.block.playing{box-shadow:0 0 0 2px var(--gold),0 6px 18px rgba(31,36,48,.16)}
+.bmeta{display:flex;align-items:center;gap:8px;padding:6px 10px 3px;font-size:12.5px;white-space:nowrap;overflow:hidden}
+.spk{flex:none;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:650;color:#fff}
+.btime{color:#3b6ea5;font-variant-numeric:tabular-nums}
+.bdur{color:var(--sub);font-variant-numeric:tabular-nums}
+.bcap{padding:5px 10px 6px;color:#333a46;font-size:13.5px;line-height:1.6;overflow-wrap:anywhere}
+.bcap+.bcap{border-top:1px solid rgba(31,36,48,.08)}
+.bcap .k{display:inline-block;min-width:58px;color:#3b6ea5;font-weight:700}
+.bcap.tmb{color:#8a6a15;font-size:13px}
+.bcap.ins{color:#3f5f8a;font-size:13px}
+@media(max-width:860px){.project-name{font-size:1.7rem}.titleblock h1{font-size:1.4em}.gmeta{display:none}.bcap{font-size:13px}}
+@media(max-width:860px){.grid,.sec-ablation .grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<button id="btn-lang" class="lang-fab">🌐 中文 / EN</button>
+
+<section class="page-header">
+  <h1 class="project-name">From Performance to Supervision</h1>
+  <p class="project-tagline" data-i18n="tagline">Local-to-Global Captioning for Audiobook Generation · Listening Demo</p>
+  <nav class="quicknav">
+    <a class="btn" href="#sec-timbre" data-i18n="nav1">① 音色设计</a>
+    <a class="btn" href="#sec-ablation" data-i18n="nav2">② Caption 消融</a>
+    <a class="btn" href="#sec-audiobook" data-i18n="nav3">③ 长音频 Caption</a>
+  </nav>
+</section>
+
+<div class="wrap main-content">
+
+<div class="titleblock">
+  <h1 data-i18n="h1">From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation</h1>
+  <div class="author-block" data-i18n="authors">李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、徐向民<sup>1</sup>、吴斌<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span></div>
+</div>
+
+<section id="sec-abstract">
+  <h2 data-i18n="abt">摘要</h2>
+  <p class="abstract-p" data-i18n="abstract">专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。</p>
+</section>
+
+<hr class="divider">
+
+<!-- ================= Section 1: Voice Design ================= -->
+<section id="sec-timbre">
+  <div class="sec-head">
+    <h2><span data-i18n="s1t">1. 音色设计展示（Voice Design）</span></h2>
+    <p data-i18n="s1d">7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。</p>
+  </div>
+  <div class="legend" data-i18n="s1legend"><b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）</div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调偏低、低沉沙哑的老年男声，沧桑内敛、饱含阅历，适合人生纪实节目或岁月回忆旁白。</div>
+    <div class="text">回头看去，那些走过的弯路，也早已成为人生的一部分。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group31/moss_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group31/pool_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group31/qwen_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group31/voxcpm2_0031.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group31/ours_030.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、清雅从容的中年女声，端庄知性、气质优雅，适合文化品牌代言或人文内容旁白。</div>
+    <div class="text">美并非浮于表面，它源于内在修养与经年累月的沉淀。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group70/moss_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group70/pool_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group70/qwen_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group70/voxcpm2_0070.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group70/ours_069.wav"></audio></div></div>
+  </div>
+
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调较高、语气神气十足的男孩嗓音，正义感强、爱扮英雄，适合英雄主题动画或男童玩具广告。</div>
+    <div class="text">别害怕，超级小队长来了，我一定会保护大家！</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group59/moss_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group59/pool_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group59/qwen_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group59/voxcpm2_0059.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group59/ours_058.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、坚定热忱的少年男声，青春昂扬、正直向上，适合励志成长短片或正能量宣传。</div>
+    <div class="text">也许我们现在还不够强大，但努力会让梦想一点点靠近。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group46/moss_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group46/pool_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group46/qwen_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group46/voxcpm2_0046.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group46/ours_045.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调偏低、磁性浑厚的青年男声，深沉性感、富有魅力，适合男士护理广告或成熟向影视配音。</div>
+    <div class="text">无需刻意证明，真正的魅力，自会在细节中显现。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group51/moss_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group51/pool_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group51/qwen_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group51/voxcpm2_0051.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group51/ours_050.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、慈和温暖的中年女声，温柔亲切、包容体贴，适合家庭温情广告或母婴健康内容。</div>
+    <div class="text">成长不必着急，我们会用耐心陪伴孩子走好每一步。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group63/moss_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group63/pool_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group63/qwen_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group63/voxcpm2_0063.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group63/ours_062.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、柔和苍老的老年女声，慈祥温暖、朴实自然，适合民间故事或亲子传承类有声书。</div>
+    <div class="text">从前啊，村口有一棵大槐树，树下藏着许多旧时光。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss</span></div><audio controls preload="none" src="audio/timbre/group17/moss_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group17/pool_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen</span></div><audio controls preload="none" src="audio/timbre/group17/qwen_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group17/voxcpm2_0017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group17/ours_016.wav"></audio></div></div>
+  </div>
+
+  </section>
+
+<hr class="divider">
+
+<!-- ================= Section 2: Caption Ablation ================= -->
+<section id="sec-ablation" class="sec-ablation">
+  <div class="sec-head">
+    <h2><span data-i18n="s2t">2. Caption消融及对比展示</span></h2>
+    <p data-i18n="s2d">5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。</p>
+  </div>
+  <div class="legend" data-i18n="s2legend"><b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）</div>
+
+  <div class="card">
+    <div class="text">“我觉得对房地产，我有兴趣，也有敏感度。”“所以我下定决心，要到这个行业里面去。”</div>
+    <div class="cap"><span class="tag">scene</span>安静环境中，两人进行深度交流，一方讲述个人成长背景与职业选择，整体氛围感性且略带沉重，演播保持生活化与情感流露。<br><span class="tag">instruct</span>语气坚定，语速平稳，表达有条理，略带思考停顿，情绪平稳且自信。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_w_instruct_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_w_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group3/ours_wo_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group3/ours_wo_scene_00036.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group3/ours_00036.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">小晨晨看着妹妹撒欢似的身影，像是被刚从羊圈里放出来的小羊羔一样，皱了皱眉，刚准备说两句，但是随即一想，这是幼儿园，应该没有危险，算了。</div>
+    <div class="cap"><span class="tag">scene</span>幼儿园户外场景，旁白描述孩子们见面互动，穿插儿童角色的轻快对话，整体氛围轻松活泼、充满童趣，演播保持生活化与角色声线的自然切换。<br><span class="tag">instruct</span>语气平稳，语速适中，尾音柔和，表达略带犹豫和自我劝解的意味。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_w_instruct_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_w_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group1/ours_wo_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group1/ours_wo_scene_00011.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group1/ours_00011.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">“想法不错，可惜呀。在绝对的实力面前，雕虫小技又有何用？”</div>
+    <div class="cap"><span class="tag">scene</span>敌军指挥官分析战况并下达命令，语气自信傲慢，氛围沉稳中带有压迫感，演播保持威严叙述与低沉对话的平稳切换。<br><span class="tag">instruct</span>语调平稳，略带嘲讽和不屑，尾音上扬，语速缓慢，表达出居高临下的态度。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_w_instruct_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_w_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group5/ours_wo_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group5/ours_wo_scene_00034.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group5/ours_00034.wav"></audio></div></div>
+  </div>
+
+
+  <div class="card">
+    <div class="text">无须道谢，这都是我应该做的，只是不知姐姐，还有什么吩咐</div>
+    <div class="cap"><span class="tag">scene</span>庭院及室内环境中，人物进行恭敬且略带紧张的交流，整体氛围庄重克制，演播保持沉稳叙述与对话的平稳切换。<br><span class="tag">instruct</span>语气平稳，略带恭敬和试探，语速适中，尾音柔和。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_w_instruct_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_w_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group4/ours_wo_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group4/ours_wo_scene_00017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group4/ours_00017.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">可是呢，这种性质极其恶劣的碎尸案，早一天侦破，就能早一天消除社会影响，对大众也有一个交代。因此，刘德民并不正面答应吴校长的话，而是说。</div>
+    <div class="cap"><span class="tag">scene</span>室内对话收尾，警方拒绝请求并离开，氛围由紧张转为平静，演播保持客观陈述与动作描写的平稳过渡。<br><span class="tag">instruct</span>语调平稳，语速偏慢，表达正式，带陈述语气，情绪克制，尾音略上扬。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_w_instruct_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_w_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group2/ours_wo_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group2/ours_wo_scene_00018.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group2/ours_00018.wav"></audio></div></div>
+  </div>
+
+  </section>
+
+<hr class="divider">
+
+<!-- ================= Section 3: Audiobook Captions ================= -->
+<section id="sec-audiobook">
+  <div class="sec-head">
+    <h2><span data-i18n="s3t">3. 有声书长音频 Caption 展示（句级 · 时间轴对齐）</span></h2>
+    <p data-i18n="s3d">本节展示对有声书长音频的逐句 caption 标注。原音频约 12 分钟，出于篇幅考虑截取其中约 4.9 分钟（49 句、4 个说话人、3 个场景）展示。每句话均标注字幕、音色描述与演播指令，并与时间轴对齐；点击任意片段定位试听，点击场景组头播放整组。</p>
+  </div>
+  <div class="ab-panel">
+    <audio id="ab-player" controls preload="none" src="audio/audiobook/399022057_seg65-113.wav"></audio>
+    <div class="ab-now" id="ab-now">▷ 尚未播放，点击任意片段开始</div>
+    <div class="ab-btns"><button id="ab-playall">▶ <span data-i18n="abplayall">播放整段</span></button></div>
+  </div>
+  <div class="legend" data-i18n="s3legend"><span style='color:#326fae;font-weight:600'>■ 说话人 0</span> ｜ <span style='color:#277963;font-weight:600'>■ 说话人 2</span> ｜ <span style='color:#7a5fa0;font-weight:600'>■ 说话人 3</span> ｜ <span style='color:#a04a68;font-weight:600'>■ 说话人 4</span></div>
+  <div class="timeline">
+  <section class="group">
+<div class="sentinel"></div>
+<div class="grouphead" id="card_grp_0" onclick="abPlay('grp_0')"><span class="gbadge">场景 5</span><span class="gtext">室内客厅环境，长辈做出让步姿态，晚辈惊喜离开，整体氛围由紧张转为缓和，演播保持平稳叙述与对话。</span><span class="gmeta">15 段 · 0:00–1:32</span></div>
+<div class="cards">
+<div class="block" id="card_seg_65" style="border-left-color:#326fae" onclick="abPlay('seg_65')" title="那些所谓的幸福感和甜蜜感，填满了心中的一切，导致他们什么也听不进去，什么也看不进去。他们一心只想着跟对方在一起，哪怕吃糠咽菜，前途一片黑暗，也无所畏惧。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">0:00–0:15</span><span class="bdur">15.8s</span></div><div class="bcap"><span class="k">字幕</span>那些所谓的幸福感和甜蜜感，填满了心中的一切，导致他们什么也听不进去，什么也看不进去。他们一心只想着跟对方在一起，哪怕吃糠咽菜，前途一片黑暗，也无所畏惧。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，鼻共鸣略带气息感，声音温柔治愈，适合有声书旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速缓慢，尾音略带沉降，表达中带着克制的伤感和坚定。</div></div>
+<div class="block" id="card_seg_66" style="border-left-color:#326fae" onclick="abPlay('seg_66')" title="上官曦就是一个很典型的例子。她是一个可以为了爱什么都不顾的人。人生在世，总要疯狂一次。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">0:17–0:25</span><span class="bdur">8.9s</span></div><div class="bcap"><span class="k">字幕</span>上官曦就是一个很典型的例子。她是一个可以为了爱什么都不顾的人。人生在世，总要疯狂一次。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，带有轻微气息感，声线沉稳且磁性十足，适合演绎知性女主播或剧情类旁白</div><div class="bcap ins"><span class="k">instruct</span>语速缓慢，语气平静，尾音轻柔上扬，整体表达带有一丝感慨和温柔。</div></div>
+<div class="block" id="card_seg_67" style="border-left-color:#326fae" onclick="abPlay('seg_67')" title="上官老太太很清楚上官曦的性子，如果她一次性拒绝到底的话，上官曦难免会走上极端的路。她叹了口气道："><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">0:27–0:37</span><span class="bdur">10.3s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太很清楚上官曦的性子，如果她一次性拒绝到底的话，上官曦难免会走上极端的路。她叹了口气道：</div><div class="bcap tmb"><span class="k">音色</span>音调适中的青年女性嗓音，略带气息感与沉稳余韵，声音温柔坚定，适合有声书旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速适中，尾音平稳，表达中性且略带无奈的情绪。</div></div>
+<div class="block" id="card_seg_68" style="border-left-color:#277963" onclick="abPlay('seg_68')" title="小溪呀，你让我再想想。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">0:38–0:42</span><span class="bdur">3.9s</span></div><div class="bcap"><span class="k">字幕</span>小溪呀，你让我再想想。</div><div class="bcap tmb"><span class="k">音色</span>老年女性声线略带沙哑与气泡音，鼻腔共鸣明显，情绪略带悲伤，适合演绎沉稳慈祥的长辈角色</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速缓慢，尾音上扬，表达一种犹豫和思索的情绪。</div></div>
+<div class="block" id="card_seg_69" style="border-left-color:#326fae" onclick="abPlay('seg_69')" title="闻言，上官曦眼前一亮。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">0:43–0:45</span><span class="bdur">2.2s</span></div><div class="bcap"><span class="k">字幕</span>闻言，上官曦眼前一亮。</div><div class="bcap tmb"><span class="k">音色</span>鼻腔共鸣显著的年轻女性声线，略带惊喜感，清亮甜润，适合古风小说旁白</div><div class="bcap ins"><span class="k">instruct</span>情绪平静，语速平稳，语气自然，略带一丝惊喜的语调。</div></div>
+<div class="block" id="card_seg_70" style="border-left-color:#a04a68" onclick="abPlay('seg_70')" title="奶奶您同意了。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">0:46–0:48</span><span class="bdur">1.5s</span></div><div class="bcap"><span class="k">字幕</span>奶奶您同意了。</div><div class="bcap tmb"><span class="k">音色</span>一位少年女性音调高亢、鼻腔共鸣明显，音色清亮甜润，充满惊喜感，适合动漫或游戏角色中的天真少女</div><div class="bcap ins"><span class="k">instruct</span>情绪惊喜，语速快，尾音上扬，表达方式为轻快的询问。</div></div>
+<div class="block" id="card_seg_71" style="border-left-color:#326fae" onclick="abPlay('seg_71')" title="上官老太太道"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">0:49–0:50</span><span class="bdur">1.2s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太道</div><div class="bcap tmb"><span class="k">音色</span>青年女性嗓音，音调适中并带轻微气息感，声线平和温婉，适合有声书旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速适中，正式且略带叙述感，声音沉稳。</div></div>
+<div class="block" id="card_seg_72" style="border-left-color:#277963" onclick="abPlay('seg_72')" title="同不同意现在还不能给你答案，等我想好了再告诉你。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">0:51–0:56</span><span class="bdur">4.6s</span></div><div class="bcap"><span class="k">字幕</span>同不同意现在还不能给你答案，等我想好了再告诉你。</div><div class="bcap tmb"><span class="k">音色</span>老年女性音调沉稳、沙哑略带撕裂感，声线磁性坚定，适合演绎沉稳严肃的领导角色</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，略带迟疑和保留，语速偏慢，尾音轻柔。</div></div>
+<div class="block" id="card_seg_73" style="border-left-color:#326fae" onclick="abPlay('seg_73')" title="只要上官老太太愿意让步，就代表这件事情有希望了。上官曦笑着道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">0:58–1:04</span><span class="bdur">6.7s</span></div><div class="bcap"><span class="k">字幕</span>只要上官老太太愿意让步，就代表这件事情有希望了。上官曦笑着道。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的青年女性嗓音，发音饱满稳定无杂质，语气平静自信，适合演绎古风剧旁白或有声小说</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速平缓，尾音轻柔，情绪克制，带有一丝希望感。</div></div>
+<div class="block" id="card_seg_74" style="border-left-color:#a04a68" onclick="abPlay('seg_74')" title="嘿，那奶奶您一定要好好的想想，左琳真的是个不可多得的好孙女婿，嫁给他，我永远不会后悔的。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">1:05–1:14</span><span class="bdur">8.4s</span></div><div class="bcap"><span class="k">字幕</span>嘿，那奶奶您一定要好好的想想，左琳真的是个不可多得的好孙女婿，嫁给他，我永远不会后悔的。</div><div class="bcap tmb"><span class="k">音色</span>鼻音偏重、音调清亮的年轻女性嗓音，略带甜腻气息，充满撒娇感，适合萌系甜宠女主配音</div><div class="bcap ins"><span class="k">instruct</span>情绪兴奋，语气恳切，语速适中，尾音上扬，表达带有撒娇和劝说的风格。</div></div>
+<div class="block" id="card_seg_75" style="border-left-color:#277963" onclick="abPlay('seg_75')" title="行了行了。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">1:15–1:16</span><span class="bdur">1.2s</span></div><div class="bcap"><span class="k">字幕</span>行了行了。</div><div class="bcap tmb"><span class="k">音色</span>音色平滑的老年女性嗓音，共鸣集中且语速平缓，适合演绎家庭剧里的长辈角色</div><div class="bcap ins"><span class="k">instruct</span>语气略带不耐烦和制止感，语速中等，尾音略微下沉。</div></div>
+<div class="block" id="card_seg_76" style="border-left-color:#326fae" onclick="abPlay('seg_76')" title="上官老太太摆摆手。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">1:17–1:18</span><span class="bdur">1.6s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太摆摆手。</div><div class="bcap tmb"><span class="k">音色</span>青年女性嗓音，鼻共鸣适中，略带沙哑且圆润温润，适合作为传统家庭剧或历史题材旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速缓慢，尾音平稳，表达克制。</div></div>
+<div class="block" id="card_seg_77" style="border-left-color:#277963" onclick="abPlay('seg_77')" title="你出去吧，我和你小姑还有事情要说。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">1:19–1:23</span><span class="bdur">3.6s</span></div><div class="bcap"><span class="k">字幕</span>你出去吧，我和你小姑还有事情要说。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的老年女性嗓音，略带沙哑且沉稳，情绪低沉严肃，非常适合演绎家庭伦理剧中权威型长辈角色</div><div class="bcap ins"><span class="k">instruct</span>语气平静但坚定，带有不容置疑的命令感，语速略慢，尾音平稳。</div></div>
+<div class="block" id="card_seg_78" style="border-left-color:#326fae" onclick="abPlay('seg_78')" title="上官曦一边说着，一边往外走。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">1:25–1:27</span><span class="bdur">2.6s</span></div><div class="bcap"><span class="k">字幕</span>上官曦一边说着，一边往外走。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，圆润平滑无杂质，声线干净利落，适合有声书旁白或影视剧角色配音</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速适中，语调自然。</div></div>
+<div class="block" id="card_seg_79" style="border-left-color:#a04a68" onclick="abPlay('seg_79')" title="那我先走了，奶奶，您什么时候想好了，什么时候告诉我。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">1:28–1:32</span><span class="bdur">4.1s</span></div><div class="bcap"><span class="k">字幕</span>那我先走了，奶奶，您什么时候想好了，什么时候告诉我。</div><div class="bcap tmb"><span class="k">音色</span>清亮的少女音色，鼻共鸣明显、略带气流感，语调柔和温和，自带温柔懂事感，适合动漫少女角色</div><div class="bcap ins"><span class="k">instruct</span>语调轻柔，语速适中，尾音上扬，表达委婉且带有请求意味。</div></div>
+</div>
+</section>
+<section class="group">
+<div class="sentinel"></div>
+<div class="grouphead" id="card_grp_1" onclick="abPlay('grp_1')"><span class="gbadge">场景 6</span><span class="gtext">室内环境，长辈与晚辈私下商议对策，透露已有安排，整体氛围沉稳且带有神秘感，演播保持低声叙述与对话。</span><span class="gmeta">26 段 · 1:34–4:03</span></div>
+<div class="cards">
+<div class="block" id="card_seg_80" style="border-left-color:#326fae" onclick="abPlay('seg_80')" title="上官曦走后，上官老太太叹了口气。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">1:34–1:37</span><span class="bdur">3.2s</span></div><div class="bcap"><span class="k">字幕</span>上官曦走后，上官老太太叹了口气。</div><div class="bcap tmb"><span class="k">音色</span>成熟稳重的青年女性嗓音，带有胸腔共鸣与轻微气息，沉静温柔且略带伤感，适合家庭剧旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速舒缓，尾音略微下沉，表达出一种无奈和伤感的情绪。</div></div>
+<div class="block" id="card_seg_81" style="border-left-color:#277963" onclick="abPlay('seg_81')" title="唉，小谢这孩子的性子，真是越来越像她妈了。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">1:38–1:43</span><span class="bdur">5.5s</span></div><div class="bcap"><span class="k">字幕</span>唉，小谢这孩子的性子，真是越来越像她妈了。</div><div class="bcap tmb"><span class="k">音色</span>温润成熟的老年女性嗓音，气息平缓略带鼻腔共鸣，温暖治愈且沉稳，非常适合出演暖心长辈</div><div class="bcap ins"><span class="k">instruct</span>叹息语气，语速缓慢，尾音下沉，表达无奈与感慨。</div></div>
+<div class="block" id="card_seg_82" style="border-left-color:#326fae" onclick="abPlay('seg_82')" title="当年的徐芬甚至比上官曦还要疯狂。他们都是为了爱不顾一切的人。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">1:45–1:51</span><span class="bdur">6.0s</span></div><div class="bcap"><span class="k">字幕</span>当年的徐芬甚至比上官曦还要疯狂。他们都是为了爱不顾一切的人。</div><div class="bcap tmb"><span class="k">音色</span>青年女性音色，平和沉稳、气息柔和，声音温暖磁性，适合有声书讲述</div><div class="bcap ins"><span class="k">instruct</span>语调平稳，语速偏慢，语气略带感叹和感慨，表达一种回顾与总结的意味。</div></div>
+<div class="block" id="card_seg_83" style="border-left-color:#326fae" onclick="abPlay('seg_83')" title="上官芙蓉点点头，感叹道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">1:53–1:55</span><span class="bdur">2.4s</span></div><div class="bcap"><span class="k">字幕</span>上官芙蓉点点头，感叹道。</div><div class="bcap tmb"><span class="k">音色</span>沉稳平和的青年女性嗓音，发音清晰且气息柔和，充满叙事感染力，适合影视剧旁白或有声书演播</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速偏慢，尾音略带感叹意味，整体表达克制而沉稳。</div></div>
+<div class="block" id="card_seg_84" style="border-left-color:#a04a68" onclick="abPlay('seg_84')" title="是啊，一晃眼，小希都这么大了。可有些事情，就像是昨天才发生的一样。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">1:56–2:04</span><span class="bdur">8.1s</span></div><div class="bcap"><span class="k">字幕</span>是啊，一晃眼，小希都这么大了。可有些事情，就像是昨天才发生的一样。</div><div class="bcap tmb"><span class="k">音色</span>青年偏中年的女性嗓音带有轻微气息感，温暖治愈且略带感性，适合暖心妈妈</div><div class="bcap ins"><span class="k">instruct</span>语气舒缓，语调平和，尾音上扬，带有感慨和怀念的情绪。</div></div>
+<div class="block" id="card_seg_85" style="border-left-color:#326fae" onclick="abPlay('seg_85')" title="说到这里，上官芙蓉话锋一转，接着道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">2:06–2:10</span><span class="bdur">3.8s</span></div><div class="bcap"><span class="k">字幕</span>说到这里，上官芙蓉话锋一转，接着道。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，发音清晰平稳、共鸣自然，适合演播有声小说或电台广播</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速中等，略带叙述感，音调轻柔，表达沉稳。</div></div>
+<div class="block" id="card_seg_86" style="border-left-color:#a04a68" onclick="abPlay('seg_86')" title="不过妈，您真的打算同意小谢和左凛在一起吗？"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">2:11–2:14</span><span class="bdur">3.8s</span></div><div class="bcap"><span class="k">字幕</span>不过妈，您真的打算同意小谢和左凛在一起吗？</div><div class="bcap tmb"><span class="k">音色</span>音色清亮圆润的年轻女性嗓音，略带气息感，鼻腔共鸣，适合演绎家庭剧的女配角</div><div class="bcap ins"><span class="k">instruct</span>语调略带疑问和迟疑，语速平稳，尾音上扬，表达出试探和不确定的情绪。</div></div>
+<div class="block" id="card_seg_87" style="border-left-color:#277963" onclick="abPlay('seg_87')" title="我是他亲奶奶，我能眼睁睁地看着他往火坑里跳啊。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">2:16–2:20</span><span class="bdur">4.7s</span></div><div class="bcap"><span class="k">字幕</span>我是他亲奶奶，我能眼睁睁地看着他往火坑里跳啊。</div><div class="bcap tmb"><span class="k">音色</span>老年女性嗓音，胸腔共鸣显著、音调中等，充满担忧与无奈，适合出演亲情剧或家庭情感题材中的慈爱长辈</div><div class="bcap ins"><span class="k">instruct</span>情绪激动，语速中等偏慢，尾音上扬，语气充满质问和担忧，表达出长辈的强烈情感。</div></div>
+<div class="block" id="card_seg_88" style="border-left-color:#326fae" onclick="abPlay('seg_88')" title="上官老太太反问。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">2:21–2:23</span><span class="bdur">1.4s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太反问。</div><div class="bcap tmb"><span class="k">音色</span>青年女性嗓音，鼻腔共鸣略带气息感，冷静克制，适合有声书演播</div><div class="bcap ins"><span class="k">instruct</span>语调平稳，语气正式，带有反问的意味。</div></div>
+<div class="block" id="card_seg_89" style="border-left-color:#a04a68" onclick="abPlay('seg_89')" title="您这是缓兵之计。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">2:24–2:25</span><span class="bdur">1.6s</span></div><div class="bcap"><span class="k">字幕</span>您这是缓兵之计。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，鼻共鸣清晰、声带略带挤压感，语调沉稳冷静，适合演绎古风权谋剧中的女谋士角色。</div><div class="bcap ins"><span class="k">instruct</span>语气冷静克制，语速平稳，尾音稍轻，带有试探和质疑的意味。</div></div>
+<div class="block" id="card_seg_90" style="border-left-color:#326fae" onclick="abPlay('seg_90')" title="上官芙蓉问道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">2:27–2:28</span><span class="bdur">1.4s</span></div><div class="bcap"><span class="k">字幕</span>上官芙蓉问道。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，圆润清亮且自然，适合演绎古风剧旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速适中，带有疑问的语气。</div></div>
+<div class="block" id="card_seg_91" style="border-left-color:#326fae" onclick="abPlay('seg_91')" title="上官老太太点点头。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">2:29–2:31</span><span class="bdur">1.6s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太点点头。</div><div class="bcap tmb"><span class="k">音色</span>鼻共鸣偏高的青年女性嗓音，声音低沉温柔，适合旁白演播</div><div class="bcap ins"><span class="k">instruct</span>语气平和，语速平稳，尾音轻微上扬，表达平静且带有一丝肯定。</div></div>
+<div class="block" id="card_seg_92" style="border-left-color:#277963" onclick="abPlay('seg_92')" title="嗯，小信那孩子，有时候性子非常极端，要是不这样说的话，我怕他会做出什么惊天动地的大事儿。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">2:32–2:42</span><span class="bdur">10.7s</span></div><div class="bcap"><span class="k">字幕</span>嗯，小信那孩子，有时候性子非常极端，要是不这样说的话，我怕他会做出什么惊天动地的大事儿。</div><div class="bcap tmb"><span class="k">音色</span>老年女性嗓音，略带气流感且声线低沉，听起来沉稳而富有磁性，适合演绎严肃稳重的长辈角色。</div><div class="bcap ins"><span class="k">instruct</span>语气深沉，语速缓慢，尾音略带担忧和感叹，表达出一种忧虑和劝诫的情绪。</div></div>
+<div class="block" id="card_seg_93" style="border-left-color:#326fae" onclick="abPlay('seg_93')" title="上官芙蓉轻叹一声。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">2:44–2:46</span><span class="bdur">1.8s</span></div><div class="bcap"><span class="k">字幕</span>上官芙蓉轻叹一声。</div><div class="bcap tmb"><span class="k">音色</span>音色沉稳中带气息的年轻女性嗓音，声线温柔治愈，略带伤感，适合有声书或情感类内容旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速舒缓，尾音轻微上扬，略带一丝无奈和感叹。</div></div>
+<div class="block" id="card_seg_94" style="border-left-color:#a04a68" onclick="abPlay('seg_94')" title="唉，可这样下去也不是个办法呀。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">2:47–2:50</span><span class="bdur">3.5s</span></div><div class="bcap"><span class="k">字幕</span>唉，可这样下去也不是个办法呀。</div><div class="bcap tmb"><span class="k">音色</span>声线平滑、气息柔和的年轻女性嗓音，带有轻微鼻音共鸣，温柔而略带伤感，适合青春剧女配角</div><div class="bcap ins"><span class="k">instruct</span>情绪为无奈、叹息，语速缓慢，尾音拖长并上扬，表达出无力和犹豫的语气。</div></div>
+<div class="block" id="card_seg_95" style="border-left-color:#326fae" onclick="abPlay('seg_95')" title="总不能一直拖着吧。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">2:51–2:52</span><span class="bdur">1.5s</span></div><div class="bcap"><span class="k">字幕</span>总不能一直拖着吧。</div><div class="bcap tmb"><span class="k">音色</span>青年女性音调适中、音色沉稳饱满，带点无奈的撒娇感，适合职场女性</div><div class="bcap ins"><span class="k">instruct</span>语气略带不满和无奈，语速中等，尾音上扬，带有疑问和轻微抱怨的口吻。</div></div>
+<div class="block" id="card_seg_96" style="border-left-color:#326fae" onclick="abPlay('seg_96')" title="上官老太太抬头看向窗外。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">2:54–2:56</span><span class="bdur">2.1s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太抬头看向窗外。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的青年女性嗓音，鼻腔共鸣明显、气息轻盈，听起来沉稳温柔，适合有声书旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速适中，略带叙述感，情绪平静。</div></div>
+<div class="block" id="card_seg_97" style="border-left-color:#277963" onclick="abPlay('seg_97')" title="等晚上燕燕回来了，我跟她商量下。那孩子聪明点子最多了。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">2:57–3:04</span><span class="bdur">6.4s</span></div><div class="bcap"><span class="k">字幕</span>等晚上燕燕回来了，我跟她商量下。那孩子聪明点子最多了。</div><div class="bcap tmb"><span class="k">音色</span>老年女性嗓音带有轻微气息感，音色温厚柔和，适合饰演慈爱的长辈角色</div><div class="bcap ins"><span class="k">instruct</span>语气平和，语速缓慢，尾音略带拖长，表达商量和肯定的意味。</div></div>
+<div class="block" id="card_seg_98" style="border-left-color:#326fae" onclick="abPlay('seg_98')" title="晚上霓烟回来之后，上官老太太就迫不及待地将霓烟拉到自己房间，和霓烟说起了上官曦的事情。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">3:05–3:13</span><span class="bdur">8.1s</span></div><div class="bcap"><span class="k">字幕</span>晚上霓烟回来之后，上官老太太就迫不及待地将霓烟拉到自己房间，和霓烟说起了上官曦的事情。</div><div class="bcap tmb"><span class="k">音色</span>鼻音共鸣适中的年轻女性嗓音，声音轻柔平稳，讲述故事时有治愈感，适合有声书或温柔旁白场景</div><div class="bcap ins"><span class="k">instruct</span>语速平稳，语气平静，略带叙述感，尾音轻微上扬。</div></div>
+<div class="block" id="card_seg_99" style="border-left-color:#326fae" onclick="abPlay('seg_99')" title="闻言，倪烟笑着道：“奶奶，这件事您就不用担心了。我相信过不了几天，小曦姐就会自己和左凛提出分手的。”"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">3:14–3:24</span><span class="bdur">10.0s</span></div><div class="bcap"><span class="k">字幕</span>闻言，倪烟笑着道：“奶奶，这件事您就不用担心了。我相信过不了几天，小曦姐就会自己和左凛提出分手的。”</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，气息感轻微，声音清亮治愈、平和自然，适合有声书或动漫少女角色配音</div><div class="bcap ins"><span class="k">instruct</span>语气轻松自信，语速平缓，尾音轻扬，带有安抚和笃定的意味。</div></div>
+<div class="block" id="card_seg_100" style="border-left-color:#277963" onclick="abPlay('seg_100')" title="真的吗？"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">3:25–3:26</span><span class="bdur">0.8s</span></div><div class="bcap"><span class="k">字幕</span>真的吗？</div><div class="bcap tmb"><span class="k">音色</span>音调偏高的老年女性嗓音，略带气息感与鼻腔共鸣，适合长辈角色</div><div class="bcap ins"><span class="k">instruct</span>语调上扬，语速平稳，表达出惊讶与怀疑的情绪。</div></div>
+<div class="block" id="card_seg_101" style="border-left-color:#326fae" onclick="abPlay('seg_101')" title="上官老太太不敢置信地看着倪烟。倪烟微微点头。真的。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">3:27–3:33</span><span class="bdur">6.0s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太不敢置信地看着倪烟。倪烟微微点头。真的。</div><div class="bcap tmb"><span class="k">音色</span>沉稳大气的青年女性嗓音，胸腔共鸣充分、吐字清晰，声线成熟庄重，适合有声书或动漫少女角色配音</div><div class="bcap ins"><span class="k">instruct</span>情绪平静，语气平稳，语速舒缓，略带无奈感。</div></div>
+<div class="block" id="card_seg_102" style="border-left-color:#277963" onclick="abPlay('seg_102')" title="妍妍啊，你是不是知道什么？还是你做了什么？"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">3:34–3:39</span><span class="bdur">5.0s</span></div><div class="bcap"><span class="k">字幕</span>妍妍啊，你是不是知道什么？还是你做了什么？</div><div class="bcap tmb"><span class="k">音色</span>老年女性嗓音鼻共鸣显著、气息轻柔，好奇语气，适合家庭剧长辈角色</div><div class="bcap ins"><span class="k">instruct</span>情绪克制，带有质问和探究意味，语速缓慢，尾音上扬，语气低沉且平稳。</div></div>
+<div class="block" id="card_seg_103" style="border-left-color:#326fae" onclick="abPlay('seg_103')" title="上官老太太好奇地问道。霓烟神秘地一笑。不过略施小计而已。霓烟很信任自己，也很信任李桐。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">3:41–3:51</span><span class="bdur">10.6s</span></div><div class="bcap"><span class="k">字幕</span>上官老太太好奇地问道。霓烟神秘地一笑。不过略施小计而已。霓烟很信任自己，也很信任李桐。</div><div class="bcap tmb"><span class="k">音色</span>一位音调适中、鼻腔共鸣明显的年轻女性，声音轻柔细腻且略带神秘，适合演绎古风剧中的聪慧角色</div><div class="bcap ins"><span class="k">instruct</span>语速平缓，语气轻柔，尾音上扬，表达神秘和信任感，情绪平静。</div></div>
+<div class="block" id="card_seg_104" style="border-left-color:#326fae" onclick="abPlay('seg_104')" title="闻言，上官老太太瞬间释怀，笑着道："><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">3:52–3:56</span><span class="bdur">3.8s</span></div><div class="bcap"><span class="k">字幕</span>闻言，上官老太太瞬间释怀，笑着道：</div><div class="bcap tmb"><span class="k">音色</span>音色沉稳、音调适中的青年女性嗓音，略带鼻腔共鸣，情绪温暖平和，适合情感类播客旁白。</div><div class="bcap ins"><span class="k">instruct</span>语气平静，语速舒缓，尾音柔和，略带笑意。</div></div>
+<div class="block" id="card_seg_105" style="border-left-color:#277963" onclick="abPlay('seg_105')" title="燕燕呐，有你这句话，我就放心了。"><div class="bmeta"><span class="spk" style="background:#277963">说话人 2</span><span class="chip">↻ 换人</span><span class="btime">3:57–4:03</span><span class="bdur">5.4s</span></div><div class="bcap"><span class="k">字幕</span>燕燕呐，有你这句话，我就放心了。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的老年女性嗓音，略带气息感，听起来温柔平稳、充满温情，适合演绎暖心长辈或家庭剧角色</div><div class="bcap ins"><span class="k">instruct</span>语调轻柔，尾音上扬，语气平稳，表达欣慰与安心。</div></div>
+</div>
+</section>
+<section class="group">
+<div class="sentinel"></div>
+<div class="grouphead" id="card_grp_2" onclick="abPlay('grp_2')"><span class="gbadge">场景 7</span><span class="gtext">室外转室内环境，时间跳转，男女主角见面交谈，整体氛围平静温和，演播保持自然对话与叙述。</span><span class="gmeta">8 段 · 4:05–4:51</span></div>
+<div class="cards">
+<div class="block" id="card_seg_106" style="border-left-color:#326fae" onclick="abPlay('seg_106')" title="第二天是周日，倪翠花和上官德辉照旧去孤儿院。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">4:05–4:10</span><span class="bdur">4.5s</span></div><div class="bcap"><span class="k">字幕</span>第二天是周日，倪翠花和上官德辉照旧去孤儿院。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，声线平和自然无杂音，讲述风格清晰且温柔，适合有声书或电台旁白场景</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速缓慢，声线轻柔，带叙述性。</div></div>
+<div class="block" id="card_seg_107" style="border-left-color:#326fae" onclick="abPlay('seg_107')" title="时间一晃，又过去一个星期。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">4:11–4:14</span><span class="bdur">2.5s</span></div><div class="bcap"><span class="k">字幕</span>时间一晃，又过去一个星期。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，略带气息感，温暖治愈且节奏舒缓，非常适合有声书朗读或暖心旁白</div><div class="bcap ins"><span class="k">instruct</span>语调平稳，语速舒缓，语气略带感慨。</div></div>
+<div class="block" id="card_seg_108" style="border-left-color:#326fae" onclick="abPlay('seg_108')" title="这一个星期左岭依旧很忙，忙到基本上没时间见上官曦。今天是个例外。左岭怕上官曦怀疑什么，第一句话就道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="btime">4:15–4:26</span><span class="bdur">11.0s</span></div><div class="bcap"><span class="k">字幕</span>这一个星期左岭依旧很忙，忙到基本上没时间见上官曦。今天是个例外。左岭怕上官曦怀疑什么，第一句话就道。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，气息略带轻柔，声音平和沉稳，适合有声书旁白或情感类广播剧</div><div class="bcap ins"><span class="k">instruct</span>语气平稳，语速偏慢，尾音轻柔，表达克制而平静，略带一丝无奈感。</div></div>
+<div class="block" id="card_seg_109" style="border-left-color:#7a5fa0" onclick="abPlay('seg_109')" title="小溪，咱们结婚的事情，你和你家人商量过了吗？"><div class="bmeta"><span class="spk" style="background:#7a5fa0">说话人 3</span><span class="chip">↻ 换人</span><span class="btime">4:27–4:30</span><span class="bdur">3.0s</span></div><div class="bcap"><span class="k">字幕</span>小溪，咱们结婚的事情，你和你家人商量过了吗？</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻男性嗓音，略带气息感，温柔平和且自然，适合情侣间的温馨对话或暖心情感剧旁白</div><div class="bcap ins"><span class="k">instruct</span>语气平和，语调平稳，语速适中，表达出关心和商量的意味。</div></div>
+<div class="block" id="card_seg_110" style="border-left-color:#326fae" onclick="abPlay('seg_110')" title="说起这事儿，上官曦满脸愧疚地看着祖灵。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">4:31–4:35</span><span class="bdur">3.8s</span></div><div class="bcap"><span class="k">字幕</span>说起这事儿，上官曦满脸愧疚地看着祖灵。</div><div class="bcap tmb"><span class="k">音色</span>音调中等、鼻腔共鸣显著的年轻女性嗓音，略带气息感并声线紧绷，适合有声书旁白或情感类广播剧</div><div class="bcap ins"><span class="k">instruct</span>情绪平静，语速平稳，语气略带歉意，声线轻柔。</div></div>
+<div class="block" id="card_seg_111" style="border-left-color:#a04a68" onclick="abPlay('seg_111')" title="佐领，对不起啊，让你等了这么久。我已经跟我奶奶说了，但是她还没有给我回复。"><div class="bmeta"><span class="spk" style="background:#a04a68">说话人 4</span><span class="chip">↻ 换人</span><span class="btime">4:36–4:42</span><span class="bdur">6.6s</span></div><div class="bcap"><span class="k">字幕</span>佐领，对不起啊，让你等了这么久。我已经跟我奶奶说了，但是她还没有给我回复。</div><div class="bcap tmb"><span class="k">音色</span>音调较高的年轻女性嗓音，鼻腔共鸣明显，略带气流感和柔和感，声音委屈带点撒娇，适合演绎动漫女主或情感剧角色</div><div class="bcap ins"><span class="k">instruct</span>语速适中，语气略带歉意和解释，尾音上扬，表达恳切。</div></div>
+<div class="block" id="card_seg_112" style="border-left-color:#326fae" onclick="abPlay('seg_112')" title="左岭双手握住上官曦的手，深情款款地道。"><div class="bmeta"><span class="spk" style="background:#326fae">说话人 0</span><span class="chip">↻ 换人</span><span class="btime">4:44–4:48</span><span class="bdur">3.9s</span></div><div class="bcap"><span class="k">字幕</span>左岭双手握住上官曦的手，深情款款地道。</div><div class="bcap tmb"><span class="k">音色</span>音调适中的年轻女性嗓音，轻柔温婉且略带气息感，充满治愈与深情，适合有声书旁白或广播剧女主角色</div><div class="bcap ins"><span class="k">instruct</span>语速平稳，语调轻柔，带有温柔和深情的表达风格。</div></div>
+<div class="block" id="card_seg_113" style="border-left-color:#7a5fa0" onclick="abPlay('seg_113')" title="没关系的小西，我理解你，也可以等你。"><div class="bmeta"><span class="spk" style="background:#7a5fa0">说话人 3</span><span class="chip">↻ 换人</span><span class="btime">4:49–4:51</span><span class="bdur">2.6s</span></div><div class="bcap"><span class="k">字幕</span>没关系的小西，我理解你，也可以等你。</div><div class="bcap tmb"><span class="k">音色</span>温柔适中的青年男性嗓音，气息轻微、胸腔共鸣柔和，语调真诚治愈，适配暖心男友或治愈系旁白</div><div class="bcap ins"><span class="k">instruct</span>语气轻柔，语速平缓，尾音上扬，表达安慰与包容，带有安抚感。</div></div>
+</div>
+</section>
+  </div>
+</section>
+
+<footer data-i18n="footer">Demo page for ICASSP submission · Static site hosted on GitHub Pages</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* ---------- i18n (UI only; sample data stays as-is) ---------- */
+var I18N={
+ zh:{nav1:"① 音色描述试听",nav2:"② Caption 消融试听",
+     h1:"From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation",
+     tagline:"面向有声书生成的 Local-to-Global Captioning · 在线试听 Demo",
+     abt:"摘要",
+     abstract:"专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。",
+     authors:"李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、徐向民<sup>1</sup>、吴斌<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span>",
+     s1t:"1. 音色设计展示（Voice Design）",
+     s1d:"7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。",
+     s1legend:"<b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）",
+     s2t:"2. Caption消融及对比展示",
+     s2d:"5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。",
+     s2legend:"<b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）",
+     nav3:"③ 长音频 Caption",
+     s3t:"3. 有声书长音频 Caption 展示（句级 · 时间轴对齐）",
+     s3d:"本节展示对有声书长音频的逐句 caption 标注。原音频约 12 分钟，出于篇幅考虑截取其中约 4.9 分钟（49 句、4 个说话人、3 个场景）展示。每句话均标注字幕、音色描述与演播指令，并与时间轴对齐；点击任意片段定位试听，点击场景组头播放整组。",
+     s3legend:"<span style='color:#326fae;font-weight:600'>■ 说话人 0</span> ｜ <span style='color:#277963;font-weight:600'>■ 说话人 2</span> ｜ <span style='color:#7a5fa0;font-weight:600'>■ 说话人 3</span> ｜ <span style='color:#a04a68;font-weight:600'>■ 说话人 4</span>",
+     abplayall:"播放整段",
+     footer:"ICASSP 投稿配套试听页 · 静态站点（GitHub Pages）"},
+ en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
+     h1:"From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation",
+     tagline:"Local-to-Global Captioning for Audiobook Generation · Listening Demo",
+     abt:"Abstract",
+     abstract:"Professional audiobook recordings provide rich examples of character voices and expressive delivery. However, captioning them involves a trade-off between granularity and context: chapter-level captioning tends to produce coarse descriptions, while segment-level captioning often misses the surrounding narrative. To address this problem, we propose a <b>local-to-global captioning pipeline</b>. It first analyzes individual speech segments and then uses their temporally ordered transcripts and captions to infer the chapter-level scene context. The pipeline annotates each segment along four dimensions: <b>timbre, text, scene, and instruct</b>. Together, these annotations connect vocal performance with the surrounding narrative without requiring the entire chapter audio to be captioned at once. We use these annotations to train <b>Text-to-Timbre</b>, which generates speaker embeddings from voice descriptions, and <b>Scene-Instruct-TTS</b>, which synthesizes speech from narrative scenes and delivery instructions. In human evaluation, our system achieves the highest mean scores for <b>character matching (3.72)</b> and <b>contextual appropriateness (3.86)</b> among the compared systems.",
+     authors:"Yangbiao Li<sup>1*</sup>, Zhenchuan Yang<sup>2*</sup>, Xiaofen Xing<sup>1†</sup>, Liufei Xie<sup>2</sup>, Hua Hua<sup>2</sup>, Meng Chen<sup>2</sup>, Xiangmin Xu<sup>1</sup>, Bin Wu<sup>2</sup>, Xinran Sun<sup>2</sup>, Kan Luo<sup>3</sup><br><span class='affil'><sup>1</sup>South China University of Technology　<sup>2</sup>Tencent Music Entertainment　<sup>3</sup>University of Electronic Science and Technology of China</span><br><span class='thanks'>*Equal contribution　†Corresponding author: Xiaofen Xing</span>",
+     s1t:"1. Voice Design",
+     s1d:"7 groups. Within each group, 5 systems synthesize the same text with the same timbre description, for comparison of timbre similarity and perceptual quality.",
+     s1legend:"<b>Moss</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours (highlighted in gold)",
+     s2t:"2. Caption Ablation and Comparison",
+     s2d:"5 groups. Within each group, 6 audios of the same text are synthesized under three caption configurations (none / instruction only / scene + instruction), showing the effect of scene and instruction captions on expressiveness and scene matching.",
+     s2legend:"<b>VoxCPM2</b>: no caption　<b>VoxCPM2-I</b>: instruction caption only　<b>VoxCPM2-SI</b>: scene + instruction captions<br><b>Ours w/o S-I</b>: no caption　<b>Ours w/o S</b>: instruction caption only　<b>Ours</b>: scene + instruction captions (full)",
+     nav3:"③ Audiobook Captions",
+     s3t:"3. Long-form Audiobook Captions (Sentence-level · Timeline-aligned)",
+     s3d:"This section showcases sentence-level caption annotation for long-form audiobooks. The original audio is about 12 minutes long; for brevity, we extract a ~4.9-minute excerpt (49 sentences, 4 speakers, 3 scenes) for demonstration. Every sentence is annotated with a subtitle, a timbre description and an instruction caption, aligned to the timeline. Click any segment to jump-listen, or a scene header to play the whole scene.",
+     s3legend:"<span style='color:#326fae;font-weight:600'>■ Speaker 0</span> ｜ <span style='color:#277963;font-weight:600'>■ Speaker 2</span> ｜ <span style='color:#7a5fa0;font-weight:600'>■ Speaker 3</span> ｜ <span style='color:#a04a68;font-weight:600'>■ Speaker 4</span>",
+     abplayall:"Play All",
+     footer:"Demo page for ICASSP submission · Static site hosted on GitHub Pages"}
+};
+var lang="zh";
+function applyLang(){
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    var v=I18N[lang][el.dataset.i18n];
+    if(v!==undefined)el.innerHTML=v;
+  });
+  document.documentElement.lang=lang==="zh"?"zh":"en";
+  document.getElementById("btn-lang").textContent=lang==="zh"?"🌐 EN":"🌐 中文";
+}
+document.getElementById("btn-lang").onclick=function(){lang=lang==="zh"?"en":"zh";applyLang();};
+
+/* ---------- section 3: audiobook timeline player ---------- */
+var AB_DATA = {"grp_0": {"start": 0.0, "end": 92.65, "dur": 92.65, "group": true, "scene_id": 5, "n": 15}, "seg_65": {"start": 0.0, "end": 15.75, "dur": 15.75, "spk": 0, "seg_idx": 65}, "seg_66": {"start": 17.0, "end": 25.9, "dur": 8.9, "spk": 0, "seg_idx": 66}, "seg_67": {"start": 27.3, "end": 37.65, "dur": 10.35, "spk": 0, "seg_idx": 67}, "seg_68": {"start": 38.55, "end": 42.5, "dur": 3.95, "spk": 2, "seg_idx": 68}, "seg_69": {"start": 43.65, "end": 45.8, "dur": 2.15, "spk": 0, "seg_idx": 69}, "seg_70": {"start": 46.85, "end": 48.4, "dur": 1.55, "spk": 4, "seg_idx": 70}, "seg_71": {"start": 49.65, "end": 50.85, "dur": 1.2, "spk": 0, "seg_idx": 71}, "seg_72": {"start": 51.98, "end": 56.6, "dur": 4.62, "spk": 2, "seg_idx": 72}, "seg_73": {"start": 58.0, "end": 64.7, "dur": 6.7, "spk": 0, "seg_idx": 73}, "seg_74": {"start": 65.75, "end": 74.1, "dur": 8.35, "spk": 4, "seg_idx": 74}, "seg_75": {"start": 75.4, "end": 76.55, "dur": 1.15, "spk": 2, "seg_idx": 75}, "seg_76": {"start": 77.25, "end": 78.9, "dur": 1.65, "spk": 0, "seg_idx": 76}, "seg_77": {"start": 79.75, "end": 83.3, "dur": 3.55, "spk": 2, "seg_idx": 77}, "seg_78": {"start": 85.1, "end": 87.7, "dur": 2.6, "spk": 0, "seg_idx": 78}, "seg_79": {"start": 88.6, "end": 92.65, "dur": 4.05, "spk": 4, "seg_idx": 79}, "grp_1": {"start": 94.05, "end": 243.1, "dur": 149.05, "group": true, "scene_id": 6, "n": 26}, "seg_80": {"start": 94.05, "end": 97.3, "dur": 3.25, "spk": 0, "seg_idx": 80}, "seg_81": {"start": 98.5, "end": 104.0, "dur": 5.5, "spk": 2, "seg_idx": 81}, "seg_82": {"start": 105.8, "end": 111.8, "dur": 6.0, "spk": 0, "seg_idx": 82}, "seg_83": {"start": 113.35, "end": 115.75, "dur": 2.4, "spk": 0, "seg_idx": 83}, "seg_84": {"start": 116.65, "end": 124.75, "dur": 8.1, "spk": 4, "seg_idx": 84}, "seg_85": {"start": 126.25, "end": 130.05, "dur": 3.8, "spk": 0, "seg_idx": 85}, "seg_86": {"start": 131.08, "end": 134.85, "dur": 3.77, "spk": 4, "seg_idx": 86}, "seg_87": {"start": 136.2, "end": 140.9, "dur": 4.7, "spk": 2, "seg_idx": 87}, "seg_88": {"start": 141.8, "end": 143.2, "dur": 1.4, "spk": 0, "seg_idx": 88}, "seg_89": {"start": 144.3, "end": 145.95, "dur": 1.65, "spk": 4, "seg_idx": 89}, "seg_90": {"start": 147.2, "end": 148.55, "dur": 1.35, "spk": 0, "seg_idx": 90}, "seg_91": {"start": 149.7, "end": 151.3, "dur": 1.6, "spk": 0, "seg_idx": 91}, "seg_92": {"start": 152.15, "end": 162.85, "dur": 10.7, "spk": 2, "seg_idx": 92}, "seg_93": {"start": 164.48, "end": 166.3, "dur": 1.82, "spk": 0, "seg_idx": 93}, "seg_94": {"start": 167.15, "end": 170.65, "dur": 3.5, "spk": 4, "seg_idx": 94}, "seg_95": {"start": 171.35, "end": 172.8, "dur": 1.45, "spk": 0, "seg_idx": 95}, "seg_96": {"start": 174.1, "end": 176.25, "dur": 2.15, "spk": 0, "seg_idx": 96}, "seg_97": {"start": 177.75, "end": 184.1, "dur": 6.35, "spk": 2, "seg_idx": 97}, "seg_98": {"start": 185.28, "end": 193.35, "dur": 8.07, "spk": 0, "seg_idx": 98}, "seg_99": {"start": 194.6, "end": 204.55, "dur": 9.95, "spk": 0, "seg_idx": 99}, "seg_100": {"start": 206.0, "end": 206.8, "dur": 0.8, "spk": 2, "seg_idx": 100}, "seg_101": {"start": 207.9, "end": 213.95, "dur": 6.05, "spk": 0, "seg_idx": 101}, "seg_102": {"start": 214.85, "end": 219.8, "dur": 4.95, "spk": 2, "seg_idx": 102}, "seg_103": {"start": 221.08, "end": 231.65, "dur": 10.57, "spk": 0, "seg_idx": 103}, "seg_104": {"start": 232.68, "end": 236.5, "dur": 3.82, "spk": 0, "seg_idx": 104}, "seg_105": {"start": 237.75, "end": 243.1, "dur": 5.35, "spk": 2, "seg_idx": 105}, "grp_2": {"start": 245.8, "end": 291.65, "dur": 45.85, "group": true, "scene_id": 7, "n": 8}, "seg_106": {"start": 245.8, "end": 250.3, "dur": 4.5, "spk": 0, "seg_idx": 106}, "seg_107": {"start": 251.55, "end": 254.1, "dur": 2.55, "spk": 0, "seg_idx": 107}, "seg_108": {"start": 255.2, "end": 266.25, "dur": 11.05, "spk": 0, "seg_idx": 108}, "seg_109": {"start": 267.35, "end": 270.3, "dur": 2.95, "spk": 3, "seg_idx": 109}, "seg_110": {"start": 271.7, "end": 275.5, "dur": 3.8, "spk": 0, "seg_idx": 110}, "seg_111": {"start": 276.3, "end": 282.95, "dur": 6.65, "spk": 4, "seg_idx": 111}, "seg_112": {"start": 284.3, "end": 288.25, "dur": 3.95, "spk": 0, "seg_idx": 112}, "seg_113": {"start": 289.08, "end": 291.65, "dur": 2.57, "spk": 3, "seg_idx": 113}};
+var AB_PREROLL = 0.25;
+var abPlayer=document.getElementById('ab-player'),abNow=document.getElementById('ab-now');
+var abStopAt=null,abCur=null;
+if('IntersectionObserver' in window){
+  var abIO=new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      var h=en.target.nextElementSibling;
+      if(h&&h.classList.contains('grouphead'))h.classList.toggle('stuck',!en.isIntersecting);
+    });
+  },{rootMargin:'-8px 0px 0px 0px',threshold:0});
+  Array.prototype.forEach.call(document.querySelectorAll('.sentinel'),function(s){abIO.observe(s);});
+}
+abPlayer.addEventListener('timeupdate',function(){
+  if(abStopAt!==null&&abPlayer.currentTime>=abStopAt){abPlayer.pause();abStopAt=null;}
+});
+</script>
+</body>
+</html>
