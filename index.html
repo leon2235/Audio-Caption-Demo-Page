@@ -5,110 +5,198 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Listening Samples · From Performance to Supervision: Local-to-Global Captioning for Audiobook Generation</title>
 <style>
---bg:#ffffff;--card:#fafafa;--ink:#1c2333;--sub:#6b7280;--line:#e5e7eb;
---accent:#4f46e5;--accent-bg:#eef2ff;--gold:#b45309;--gold-bg:#fffbeb}
+/* ===== design tokens ===== */
+:root{--bg:#f6f7f9;--card:#ffffff;--ink:#151a21;--sub:#5d6672;
+--line:#e4e8ee;--line-soft:#eef1f5;
+--brand:#1e3a5f;--brand-soft:#eaf1f8;--violet:#1e3a5f;--violet-soft:#eff5fb;
+--gold:#b45309;--gold-line:#e8a33d;--gold-bg:#fff8ec;
+--radius:14px;--radius-sm:10px;
+--fs-hero:46px;--fs-h2:30px;--fs-h3:18px;--fs-lead:17.5px;--fs-body:17px;
+--fs-note:15px;--fs-meta:13px;--fs-foot:12.5px;
+--shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+--shadow-lg:0 12px 32px rgba(16,24,40,.14)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-background:var(--bg);color:var(--ink);font-size:17px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+font-size:var(--fs-body);line-height:1.75;color:var(--ink);background:var(--bg)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+sup{font-size:.72em}
 
-/* ---- language fab & gradient page header (Cayman style) ---- */
-.lang-fab{position:fixed;top:20px;right:20px;z-index:999;background:var(--accent);
-color:#fff;border:none;padding:10px 16px;border-radius:22px;font-size:13.5px;
-font-weight:700;cursor:pointer;box-shadow:0 4px 10px rgba(49,46,129,.3);transition:background .2s}
-.lang-fab:hover{background:#4338ca}
-.page-header{color:#fff;text-align:center;padding:4rem 2rem 3.4rem;
-background-image:linear-gradient(60deg,#312e81,#4f46e5)}
-.project-name{margin:0;font-size:2.5rem;font-weight:700;line-height:1.25}
-.project-tagline{margin:.7rem 0 0;font-weight:normal;opacity:.75;font-size:1.05rem}
+/* ===== reading progress & back-to-top ===== */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+background:linear-gradient(90deg,#1e3a5f,#e8a33d);transition:width .1s linear}
+#totop{position:fixed;right:20px;bottom:24px;z-index:900;width:42px;height:42px;border-radius:50%;
+border:1px solid var(--line);background:#fff;color:var(--sub);font-size:17px;cursor:pointer;
+box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s}
+#totop.show{opacity:1;pointer-events:auto}
+#totop:hover{color:var(--brand);border-color:var(--brand)}
+
+/* ===== banner ===== */
+.lang-fab{position:fixed;top:18px;right:18px;z-index:999;color:#fff;cursor:pointer;
+padding:9px 16px;border-radius:999px;font-size:var(--fs-meta);font-weight:700;
+background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);
+transition:background .2s}
+.lang-fab:hover{background:rgba(255,255,255,.26)}
+.page-header{position:relative;overflow:hidden;color:#fff;text-align:center;padding:4.4rem 2rem 3.6rem;background:#1e1b4b}
+.page-header::before{content:'';position:absolute;inset:0;background:
+radial-gradient(900px 380px at 16% -12%,rgba(232,163,61,.32),transparent 62%),
+radial-gradient(760px 340px at 88% 6%,rgba(47,85,131,.55),transparent 60%),
+linear-gradient(120deg,#0f1a2b,#1e3a5f 52%,#2f5583)}
+.page-header>*{position:relative}
+.project-name{margin:0;font-size:var(--fs-hero);font-weight:800;letter-spacing:-.025em;line-height:1.16}
+.project-tagline{margin:.7rem 0 0;opacity:.82;font-size:16px;letter-spacing:.01em}
 .quicknav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.7rem}
-.quicknav .btn{display:inline-block;padding:8px 18px;border-radius:.4rem;font-size:14.5px;font-weight:600;
-color:rgba(255,255,255,.85);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);
-text-decoration:none;transition:all .2s}
-.quicknav .btn:hover{background:rgba(255,255,255,.2);color:#fff;text-decoration:none}
-/* ---- title, authors & abstract ---- */
-.titleblock{text-align:center;padding-top:2.2rem}
-.author-block{text-align:center;font-size:17.5px;line-height:1.9}
-.author-block sup{color:var(--accent)}
-.author-block .affil{color:var(--sub);font-size:14.5px}
-.author-block .thanks{color:var(--sub);font-size:12.5px}
-.main-content h2{color:#7c3aed;font-weight:700;font-size:1.65em;margin:2.2rem 0 1rem}
-.abstract-p{font-size:1.08em;line-height:1.85;color:#2a3140;text-align:justify}
-.abstract-p b{color:var(--ink)}
-/* ---- sections ---- */
+.quicknav .btn{display:inline-block;padding:9px 20px;border-radius:999px;font-size:var(--fs-note);font-weight:600;
+color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);
+text-decoration:none;backdrop-filter:blur(4px);transition:all .2s}
+.quicknav .btn:hover{background:rgba(255,255,255,.24);color:#fff;text-decoration:none}
+
+/* ===== title, authors, abstract ===== */
+.titleblock{text-align:center;padding-top:2.4rem}
+.author-block{font-size:18px;line-height:1.9}
+.author-block sup{color:var(--violet);font-weight:650}
+.author-block .affil{color:var(--sub);font-size:var(--fs-note)}
+.author-block .thanks{color:var(--sub);font-size:var(--fs-foot)}
+.main-content h2{display:flex;align-items:center;gap:10px;color:var(--violet);font-weight:750;
+font-size:var(--fs-h2);letter-spacing:-.015em;line-height:1.3;margin:2.6rem 0 1rem}
+.main-content h2::before{content:'';flex:none;width:4px;height:1.05em;border-radius:2px;background:var(--violet)}
+.abstract-p{font-size:var(--fs-lead);line-height:1.95;color:#2c3350;text-align:justify;
+padding:2px 0 2px 20px;border-left:3px solid var(--gold-line)}
+
+/* ===== pipeline figure ===== */
+.fig{margin:30px 0 0}
+.fig img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);
+box-shadow:0 8px 24px rgba(16,24,40,.09);cursor:zoom-in}
+#lightbox{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;
+padding:24px;background:rgba(12,16,24,.84);backdrop-filter:blur(4px)}
+#lightbox.show{display:flex}
+#lightbox img{max-width:96vw;max-height:88vh;border-radius:8px;background:#fff;
+box-shadow:0 24px 70px rgba(0,0,0,.55)}
+#lightbox .lb-close{position:absolute;top:16px;right:24px;color:#fff;font-size:32px;
+line-height:1;cursor:pointer;opacity:.85}
+#lightbox .lb-cap{position:absolute;bottom:20px;left:0;right:0;text-align:center;padding:0 24px;
+color:rgba(255,255,255,.85);font-size:13px;line-height:1.6}
+.fig figcaption{margin-top:11px;text-align:center;color:var(--sub);font-size:var(--fs-meta);
+line-height:1.7;letter-spacing:.01em}
+
+/* ===== contributions ===== */
+.contrib{margin:32px 0 0}
+.contrib h3{display:flex;align-items:center;gap:9px;font-size:var(--fs-h3);font-weight:750;
+color:var(--ink);margin:0 0 14px;letter-spacing:-.01em}
+.contrib h3::before{content:'';flex:none;width:3px;height:1em;border-radius:2px;background:var(--gold-line)}
+.clist{list-style:none;padding:0;margin:0;counter-reset:item}
+.clist li{position:relative;padding:0 0 0 44px;font-size:var(--fs-note);line-height:1.85;color:#333c4d}
+.clist li+li{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.clist li::before{content:counter(item);counter-increment:item;position:absolute;left:0;top:1px;
+width:24px;height:24px;border-radius:50%;background:rgba(232,163,61,.16);color:var(--gold);
+border:1px solid rgba(232,163,61,.55);font-size:13px;font-weight:750;
+display:flex;align-items:center;justify-content:center}
+.clist li b{color:var(--ink);font-weight:700}
+
+/* ===== sections ===== */
 section{padding-top:26px}
-hr.divider{height:1px;border:0;margin:6px 0 0;background:#7c3aed}
+hr.divider{height:1px;border:0;margin:8px 0 0;background:#d97706}
 .sec-head{margin-bottom:14px}
-.sec-head p{color:var(--sub);font-size:15px;line-height:1.7}
+.sec-head p{color:var(--sub);font-size:var(--fs-note);line-height:1.75}
 button{border:1px solid var(--line);background:var(--card);border-radius:8px;
 padding:8px 14px;font-size:14px;cursor:pointer;color:var(--ink)}
 button:hover{border-color:#c3cad6}
-button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.legend{background:var(--card);border:1px solid var(--line);border-radius:10px;
-padding:13px 16px;font-size:14.5px;margin-bottom:22px;line-height:1.9}
-.legend b{color:var(--accent)}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);
+padding:14px 17px;font-size:var(--fs-note);margin-bottom:20px;line-height:1.9;box-shadow:var(--shadow)}
+.legend b{color:var(--violet)}
 
-/* ---- sample cards ---- */
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
-padding:20px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.text{background:#f8fafc;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
-padding:10px 12px;font-size:15.5px;line-height:1.8;margin-bottom:10px}
-.cap{font-size:14px;color:var(--sub);line-height:1.7;margin-bottom:14px}
-.cap .tag{display:inline-block;background:var(--accent-bg);color:var(--accent);
+/* ===== comparison cards ===== */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.text{background:#f6f8fc;border-left:3px solid var(--violet);border-radius:0 8px 8px 0;
+padding:12px 14px;font-size:var(--fs-lead);line-height:1.85;margin-bottom:12px}
+.cap{font-size:var(--fs-note);color:var(--sub);line-height:1.75;margin-bottom:14px}
+.cap .tag{display:inline-block;background:var(--brand-soft);color:var(--brand);
 border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .sec-ablation .grid{grid-template-columns:repeat(6,1fr)}
-.cell{display:flex;flex-direction:column;gap:6px;padding:10px 8px;border-radius:10px;
-border:1px solid transparent;background:#fff;min-width:0}
-.cell.star{background:var(--gold-bg);border-color:#fde68a}
-.badge{text-align:center;font-size:13.5px;font-weight:600;white-space:nowrap;
+.cell{display:flex;flex-direction:column;gap:7px;padding:10px 8px;min-width:0;
+background:#fbfcfe;border:1px solid var(--line-soft);border-radius:var(--radius-sm);transition:all .18s}
+.cell:hover{border-color:#c7d0e8;box-shadow:0 2px 8px rgba(16,24,40,.06)}
+.cell.star{background:var(--gold-bg);border-color:#f6dfa8}
+.cell.playing{background:var(--gold-bg);border-color:var(--gold-line);
+box-shadow:0 0 0 2px rgba(240,180,41,.38)}
+.cell audio{width:100%;height:32px}
+.badge{text-align:center;font-size:var(--fs-meta);font-weight:650;white-space:nowrap;
 overflow:hidden;text-overflow:ellipsis}
 .badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;
 margin-right:4px;background:#9ca3af;vertical-align:1px}
-.badge.star .dot{background:var(--gold)}
+.badge.star .dot{background:var(--gold-line)}
 .badge.star{color:var(--gold)}
-.cell audio{width:100%;height:32px}
-footer{margin-top:36px;padding:22px 0 30px;text-align:center;
-color:var(--sub);font-size:12.5px;border-top:1px solid var(--line)}
-/* ---- section 3: audiobook captions ---- */
-.ab-panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px}
-.ab-panel audio{width:100%;height:38px;display:block}
-.ab-now{margin-top:8px;min-height:20px;color:var(--gold);font-size:14.5px;font-variant-numeric:tabular-nums}
+
+/* ===== section 3: audiobook timeline ===== */
+.ab-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);
+padding:12px 14px;margin-bottom:16px;box-shadow:var(--shadow)}
+.ab-panel audio{display:block;width:100%;height:38px}
+.ab-now{margin-top:8px;min-height:20px;color:var(--gold);font-size:var(--fs-note);font-variant-numeric:tabular-nums}
 .ab-btns{margin-top:8px}
 .timeline{margin-top:4px}
 .sentinel{height:0}
-.group{padding:10px 12px;border:1px solid transparent;border-radius:12px;
-transition:background .25s,border-color .25s,box-shadow .25s}
-.group.wrapped{background:#f3efff;border-color:#a78bfa;box-shadow:0 8px 24px rgba(124,58,237,.22)}
-.group+.group{margin-top:20px}
-.grouphead{position:sticky;z-index:40;top:8px;display:flex;align-items:baseline;gap:10px;padding:9px 12px;background:#eef1f5;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:7px;cursor:pointer;transition:box-shadow .12s}
-.grouphead.stuck{box-shadow:0 8px 20px rgba(31,36,48,.16)}
-.grouphead:hover{box-shadow:0 0 0 2px var(--gold)}
-.grouphead.playing{box-shadow:0 0 0 2px var(--gold),0 6px 18px rgba(31,36,48,.16)}
-.gbadge{flex:none;font-weight:700;color:#a06d10}
-.gtext{font-size:14.5px;line-height:1.6}
-.gmeta{margin-left:auto;flex:none;color:var(--sub);font-size:13px;white-space:nowrap}
-.cards{display:grid;gap:10px;margin-top:10px}
-.block{border:1px solid rgba(31,36,48,.1);border-left-width:5px;border-radius:7px;background:var(--card);cursor:pointer}
-.block:hover{box-shadow:0 0 0 2px var(--gold)}
-.block.playing{background:#fffbeb;border-color:var(--gold);
-box-shadow:0 0 0 2px var(--gold),0 8px 20px rgba(180,83,9,.18)}
+.group{padding:12px 14px;border:1px solid transparent;border-radius:14px;
+transition:background .3s,border-color .3s,box-shadow .3s,opacity .3s,filter .3s}
+#sec-audiobook.focus .group:not(.wrapped){opacity:.48;filter:saturate(.55)}
+.group.wrapped{background:#f2f6fb;border-color:#c3d6e8;box-shadow:0 10px 28px rgba(30,58,95,.13)}
+.group+.group{margin-top:14px}
+.grouphead{position:sticky;z-index:40;top:8px;display:flex;align-items:center;gap:12px;padding:11px 14px;
+background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold-line);border-radius:10px;
+cursor:pointer;box-shadow:var(--shadow);transition:background .3s,color .3s,box-shadow .25s}
+.grouphead:hover{box-shadow:0 0 0 2px var(--gold-line),var(--shadow)}
+.grouphead.stuck{box-shadow:0 12px 26px rgba(16,24,40,.18)}
+.grouphead.playing{box-shadow:0 0 0 2px var(--gold-line),0 8px 20px rgba(16,24,40,.2)}
+.group.wrapped .grouphead{background:linear-gradient(90deg,#16293f,#2f5583);border-color:transparent;color:#fff}
+.group.wrapped .grouphead .gbadge{color:#f6c877}
+.group.wrapped .grouphead .gtext{color:#eaf1f8}
+.group.wrapped .grouphead .gmeta{color:rgba(255,255,255,.72)}
+.gbadge{flex:none;font-weight:750;font-size:var(--fs-note);color:#a06d10}
+.gtext{font-size:var(--fs-h3);font-weight:600;line-height:1.5;flex:1}
+.gmeta{flex:none;color:var(--sub);font-size:var(--fs-meta);white-space:nowrap}
+.cards{position:relative;display:grid;gap:9px;margin:10px 0 0;padding-left:16px}
+.cards::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:2px;border-radius:2px;background:#dbe3ec}
+.group.wrapped .cards::before{background:linear-gradient(180deg,#e8a33d,#2f5583)}
+.block{position:relative;border:1px solid rgba(31,36,48,.1);border-left-width:5px;border-radius:7px;
+background:var(--card);cursor:pointer;transition:background .18s,box-shadow .18s}
+.block::before{content:'';position:absolute;left:-15px;top:15px;width:10px;height:10px;border-radius:50%;
+background:#fff;border:2px solid #b8c6d8;box-sizing:border-box}
+.block.playing::before{background:var(--gold-line);border-color:var(--gold)}
+.block:hover{box-shadow:0 0 0 2px var(--gold-line)}
+.block.playing{background:var(--gold-bg);border-color:var(--gold-line);
+box-shadow:0 0 0 2px var(--gold-line),0 8px 20px rgba(194,116,10,.14)}
 .block.playing .bmeta::after{content:'\25B6';margin-left:auto;color:var(--gold);font-size:14px;font-weight:700}
-.bmeta{display:flex;align-items:center;gap:8px;padding:6px 10px 3px;font-size:13.5px;white-space:nowrap;overflow:hidden}
-.spk{flex:none;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:650;color:#fff}
-.btime{color:#3b6ea5;font-variant-numeric:tabular-nums}
+.bmeta{display:flex;align-items:center;gap:8px;padding:6px 10px 3px;font-size:var(--fs-meta);white-space:nowrap;overflow:hidden}
+.spk{flex:none;padding:2px 7px;border-radius:4px;font-size:11.5px;font-weight:650;color:#fff;filter:saturate(.85)}
+.btime{color:var(--sub);font-variant-numeric:tabular-nums}
 .bdur{color:var(--sub);font-variant-numeric:tabular-nums}
-.bcap{padding:5px 10px 6px;color:#333a46;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+.bcap{padding:5px 10px 6px;color:#333a46;font-size:15.5px;line-height:1.7;overflow-wrap:anywhere}
 .bcap+.bcap{border-top:1px solid rgba(31,36,48,.08)}
-.bcap .k{display:inline-block;min-width:58px;color:#3b6ea5;font-weight:700}
-.bcap.tmb{color:#8a6a15;font-size:14px}
-.bcap.ins{color:#3f5f8a;font-size:14px}
-@media(max-width:860px){.project-name{font-size:1.7rem}.gmeta{display:none}.bcap{font-size:13px}}
+.bcap .k{display:inline-block;min-width:58px;color:var(--brand);font-weight:700}
+.bcap.tmb{color:#8a6a15;font-size:14.5px}
+.bcap.ins{color:#3f5f8a;font-size:14.5px}
+
+/* ===== floating mini player ===== */
+.minibar{position:fixed;left:50%;transform:translateX(-50%) translateY(150%);bottom:16px;z-index:950;
+display:flex;align-items:center;gap:12px;width:min(720px,calc(100% - 32px));padding:9px 14px;
+border-radius:14px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+border:1px solid var(--line);box-shadow:var(--shadow-lg);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.minibar.show{transform:translateX(-50%) translateY(0)}
+.mini-btn{flex:none;width:36px;height:36px;border-radius:50%;border:none;background:var(--brand);
+color:#fff;font-size:13px;cursor:pointer}
+.mini-label{flex:1;min-width:0;font-size:var(--fs-meta);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-seek{flex:0 0 180px;accent-color:var(--brand)}
+.mini-time{flex:none;font-size:12.5px;color:var(--sub);font-variant-numeric:tabular-nums}
+@media(max-width:860px){.mini-seek{display:none}}
+
+footer{margin-top:40px;padding:24px 0 34px;text-align:center;
+color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
+@media(max-width:860px){.project-name{font-size:30px}.gtext{font-size:16px}.gmeta{display:none}.bcap{font-size:14.5px}
+.cell.star,.cell.playing{box-shadow:none}}
 @media(max-width:860px){.grid,.sec-ablation .grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-
 <button id="btn-lang" class="lang-fab">🌐 中文 / EN</button>
 
 <section class="page-header">
@@ -131,6 +219,22 @@ box-shadow:0 0 0 2px var(--gold),0 8px 20px rgba(180,83,9,.18)}
   <h2 data-i18n="abt">摘要</h2>
   <p class="abstract-p" data-i18n="abstract">专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。</p>
 </section>
+
+
+<figure class="fig">
+  <img src="img/pipeline.png" alt="Pipeline and model structures">
+  <figcaption data-i18n="fig1">整体流水线与模型结构：(a) 面向有声书的长音频 captioning；(b) Text-to-Timbre 模型结构；(c) Scene-Instruct-TTS 模型结构。</figcaption>
+</figure>
+
+
+<div class="contrib">
+  <h3 data-i18n="cont">主要贡献</h3>
+  <ol class="clist">
+    <li data-i18n="c1"><b>面向有声书的音频标注。</b>我们提出 local-to-global 标注流水线，沿<b>音色、文本、场景、演播</b>四个维度对每个语音片段进行标注，分别刻画角色的声音、所说内容、叙事语境与表达方式；并引入领域自适应的年龄分类器改进感知年龄标注。</li>
+    <li data-i18n="c2"><b>细粒度的文本到音色生成。</b>我们提出 Text-to-Timbre（TTT）模型，可由详细的音色描述生成说话人嵌入；其交叉注意力机制以 token 级文本信息为条件，使模型能够捕捉描述中包含的多种声音属性。</li>
+    <li data-i18n="c3"><b>面向有声书合成的 Scene-Instruct-TTS。</b>我们以预训练 TTS 骨干网络为基础构建 Scene-Instruct-TTS，使其同时以说话人嵌入、转写文本、场景描述与演播指令为条件，生成与指定角色及叙事语境相匹配的语音。</li>
+  </ol>
+</div>
 
 <hr class="divider">
 
@@ -319,12 +423,27 @@ box-shadow:0 0 0 2px var(--gold),0 8px 20px rgba(180,83,9,.18)}
 
 </div><!-- /wrap -->
 
+
+<div class="minibar" id="minibar">
+  <button class="mini-btn" id="mini-btn">⏯</button>
+  <div class="mini-label" id="mini-label"></div>
+  <input class="mini-seek" id="mini-seek" type="range" min="0" max="1000" value="0">
+  <div class="mini-time" id="mini-time">0:00</div>
+</div>
+<div id="lightbox"><span class="lb-close">&times;</span><img id="lb-img" src="" alt=""><div class="lb-cap" id="lb-cap"></div></div>
+<div id="progress"></div>
+<button id="totop" title="↑">↑</button>
 <script>
 /* ---------- i18n (UI only; sample data stays as-is) ---------- */
 var I18N={
  zh:{nav1:"① 音色描述试听",nav2:"② Caption 消融试听",
      tagline:"面向有声书生成的 Local-to-Global Captioning · 在线试听 Demo",
      abt:"摘要",
+     fig1:"整体流水线与模型结构：(a) 面向有声书的长音频 captioning；(b) Text-to-Timbre 模型结构；(c) Scene-Instruct-TTS 模型结构。",
+     cont:"主要贡献",
+     c1:"<b>面向有声书的音频标注。</b>我们提出 local-to-global 标注流水线，沿<b>音色、文本、场景、演播</b>四个维度对每个语音片段进行标注，分别刻画角色的声音、所说内容、叙事语境与表达方式；并引入领域自适应的年龄分类器改进感知年龄标注。",
+     c2:"<b>细粒度的文本到音色生成。</b>我们提出 Text-to-Timbre（TTT）模型，可由详细的音色描述生成说话人嵌入；其交叉注意力机制以 token 级文本信息为条件，使模型能够捕捉描述中包含的多种声音属性。",
+     c3:"<b>面向有声书合成的 Scene-Instruct-TTS。</b>我们以预训练 TTS 骨干网络为基础构建 Scene-Instruct-TTS，使其同时以说话人嵌入、转写文本、场景描述与演播指令为条件，生成与指定角色及叙事语境相匹配的语音。",
      abstract:"专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。",
      authors:"李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、陈梦<sup>2</sup>、孙欣然<sup>2</sup>、罗刊<sup>3</sup>、吴斌<sup>2</sup>、徐向民<sup>1</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐　<sup>3</sup>电子科技大学</span><br><span class='thanks'>*同等贡献　†通讯作者：邢晓芬</span>",
      s1t:"1. 音色设计展示（Voice Design）",
@@ -342,6 +461,11 @@ var I18N={
  en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
      tagline:"Local-to-Global Captioning for Audiobook Generation · Listening Demo",
      abt:"Abstract",
+     fig1:"Overview of the pipeline and the model structures: (a) audiobook-oriented long audio captioning; (b) Text-to-Timbre; (c) Scene-Instruct-TTS.",
+     cont:"Contributions",
+     c1:"<b>Audiobook-oriented audio captioning.</b> We develop a local-to-global pipeline that annotates each speech segment along four dimensions: <b>timbre, text, scene, and instruct</b>. These annotations describe the character's voice, spoken content, narrative context, and delivery, respectively. We also use a domain-adapted age classifier to improve the perceived-age annotations.",
+     c2:"<b>Fine-grained text-to-timbre generation.</b> We develop a Text-to-Timbre (TTT) model that generates speaker embeddings from detailed timbre descriptions. Its cross-attention mechanism conditions the generated embedding on token-level textual information, allowing the model to capture multiple vocal attributes within a description.",
+     c3:"<b>Scene-Instruct-TTS for audiobook synthesis.</b> We develop Scene-Instruct-TTS by adapting a pretrained TTS backbone to jointly condition on speaker embeddings, transcripts, scene descriptions, and delivery instructions. The model generates character speech whose voice and delivery match the specified character and narrative context.",
      abstract:"Professional audiobook recordings provide rich examples of character voices and expressive delivery. However, captioning them involves a trade-off between granularity and context: chapter-level captioning tends to produce coarse descriptions, while segment-level captioning often misses the surrounding narrative. To address this problem, we propose a <b>local-to-global captioning pipeline</b>. It first analyzes individual speech segments and then uses their temporally ordered transcripts and captions to infer the chapter-level scene context. The pipeline annotates each segment along four dimensions: <b>timbre, text, scene, and instruct</b>. Together, these annotations connect vocal performance with the surrounding narrative without requiring the entire chapter audio to be captioned at once. We use these annotations to train <b>Text-to-Timbre</b>, which generates speaker embeddings from voice descriptions, and <b>Scene-Instruct-TTS</b>, which synthesizes speech from narrative scenes and delivery instructions. In human evaluation, our system achieves the highest mean scores for <b>character matching (3.72)</b> and <b>contextual appropriateness (3.86)</b> among the compared systems.",
      authors:"Yangbiao Li<sup>1*</sup>, Zhenchuan Yang<sup>2*</sup>, Xiaofen Xing<sup>1†</sup>, Liufei Xie<sup>2</sup>, Hua Hua<sup>2</sup>, Meng Chen<sup>2</sup>, Xinran Sun<sup>2</sup>, Kan Luo<sup>3</sup>, Bin Wu<sup>2</sup>, Xiangmin Xu<sup>1</sup><br><span class='affil'><sup>1</sup>South China University of Technology　<sup>2</sup>Tencent Music Entertainment　<sup>3</sup>University of Electronic Science and Technology of China</span><br><span class='thanks'>*Equal contribution　†Corresponding author: Xiaofen Xing</span>",
      s1t:"1. Voice Design",
@@ -425,6 +549,113 @@ function abPlay(id){
 abPlayer.addEventListener('timeupdate',function(){
   if(abStopAt!==null&&abPlayer.currentTime>=abStopAt){abPlayer.pause();abStopAt=null;}
 });
+
+/* ================= v2 enhancements ================= */
+/* (1) A/B sync: switching systems inside one group resumes at the same relative position */
+var v2Last=null;
+document.addEventListener('play',function(e){
+  var a=e.target;
+  if(!a||String(a.tagName)!=='AUDIO')return;
+  document.querySelectorAll('audio.v2playing').forEach(function(x){
+    if(x!==a){x.classList.remove('v2playing');var cc=x.closest('.cell');if(cc)cc.classList.remove('playing');}
+  });
+  a.classList.add('v2playing');
+  var cell=a.closest('.cell');if(cell)cell.classList.add('playing');
+  if(v2Last&&v2Last!==a){
+    var g1=a.closest('.grid'),g2=v2Last.closest('.grid');
+    if(g1&&g1===g2&&v2Last.duration&&a.duration){
+      try{a.currentTime=Math.max(0,Math.min(a.duration-0.05,(v2Last.currentTime/v2Last.duration)*a.duration));}catch(err){}
+    }
+    try{v2Last.pause();}catch(err){}
+  }
+  v2Last=a;miniAttach(a);
+},true);
+
+/* (2) floating mini player: keeps control of the current audio once it scrolls away */
+var mini=document.getElementById('minibar'),miniBtn=document.getElementById('mini-btn'),
+    miniLabel=document.getElementById('mini-label'),miniSeek=document.getElementById('mini-seek'),
+    miniTime=document.getElementById('mini-time');
+var miniAudio=null,miniIO=null,miniInView=true;
+function v2mmss(t){if(!isFinite(t))return '0:00';var m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0':'')+s;}
+function miniName(a){
+  if(a.id==='ab-player')return (lang==='zh'?'长音频演播（整段）':'Audiobook excerpt (full)');
+  var c=a.closest('.cell');
+  if(c){var nm=c.querySelector('.nm');var card=c.closest('.card');
+    var tx=card?card.querySelector('.text'):null;
+    return (nm?nm.textContent:'')+(tx?' · '+tx.textContent.slice(0,12):'');}
+  var b=a.closest('.block');
+  if(b){var cap=b.querySelector('.bcap');return cap?cap.textContent.slice(0,18):'';}
+  return '';
+}
+function miniAttach(a){
+  miniAudio=a;miniLabel.textContent=miniName(a);miniBtn.textContent='⏸';
+  if(miniIO)miniIO.disconnect();
+  if('IntersectionObserver' in window){
+    miniIO=new IntersectionObserver(function(es){
+      es.forEach(function(en){miniInView=en.isIntersecting;mini.classList.toggle('show',!en.isIntersecting&&!a.paused);});
+    },{threshold:0});
+    miniIO.observe(a);
+  }
+  if(!a.dataset.v2bound){a.dataset.v2bound='1';a.addEventListener('timeupdate',miniTick);
+    a.addEventListener('pause',function(){mini.classList.remove('show');miniBtn.textContent='▶';});
+    a.addEventListener('play',function(){miniBtn.textContent='⏸';});}
+  miniTick();
+}
+function miniTick(){
+  var a=miniAudio;if(!a)return;
+  if(a.duration)miniSeek.value=Math.round(a.currentTime/a.duration*1000);
+  miniTime.textContent=v2mmss(a.currentTime)+' / '+v2mmss(a.duration);
+  mini.classList.toggle('show',!miniInView&&!a.paused);
+}
+miniBtn.onclick=function(){
+  if(!miniAudio)return;
+  if(miniAudio.paused){miniAudio.play();}else{miniAudio.pause();}
+  this.textContent=miniAudio.paused?'▶':'⏸';
+};
+miniSeek.oninput=function(){if(miniAudio&&miniAudio.duration)miniAudio.currentTime=this.value/1000*miniAudio.duration;};
+
+/* (2b) spotlight: dim the other scene groups while section 3 is on screen */
+var secAB=document.getElementById('sec-audiobook');
+if(secAB&&'IntersectionObserver' in window){
+  new IntersectionObserver(function(es){
+    es.forEach(function(en){secAB.classList.toggle('focus',en.isIntersecting);});
+  },{threshold:0}).observe(secAB);
+}
+
+/* (2c) click the pipeline figure to view it larger */
+(function(){
+  var box=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
+  if(!box)return;
+  document.querySelectorAll('.fig img').forEach(function(img){
+    img.addEventListener('click',function(){
+      lbImg.src=img.src;
+      var fig=img.closest('.fig');var cap=fig?fig.querySelector('figcaption'):null;
+      lbCap.textContent=cap?cap.textContent:'';
+      box.classList.add('show');
+    });
+  });
+  function lbClose(){box.classList.remove('show');lbImg.src='';}
+  box.addEventListener('click',function(e){if(e.target!==lbImg)lbClose();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lbClose();});
+})();
+
+/* (3) reading progress + back to top */
+var v2bar=document.getElementById('progress'),v2top=document.getElementById('totop');
+window.addEventListener('scroll',function(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  v2bar.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+  v2top.classList.toggle('show',window.scrollY>700);
+},{passive:true});
+v2top.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
+
+/* (4) keep the playing segment of section 3 within the viewport */
+var _abPlay=abPlay;
+abPlay=function(id){
+  _abPlay(id);
+  var el=document.getElementById('card_'+id);
+  if(el){var r=el.getBoundingClientRect();
+    if(r.top<90||r.bottom>window.innerHeight-90)el.scrollIntoView({block:'center',behavior:'smooth'});}
+};
 </script>
 </body>
 </html>
