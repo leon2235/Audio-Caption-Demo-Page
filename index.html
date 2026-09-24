@@ -43,7 +43,6 @@ radial-gradient(760px 340px at 88% 6%,rgba(47,85,131,.55),transparent 60%),
 linear-gradient(120deg,#0f1a2b,#1e3a5f 52%,#2f5583)}
 .page-header>*{position:relative}
 .project-name{margin:0;font-size:var(--fs-hero);font-weight:800;letter-spacing:-.025em;line-height:1.16}
-.project-tagline{margin:.7rem 0 0;opacity:.82;font-size:16px;letter-spacing:.01em}
 .quicknav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.7rem}
 .quicknav .btn{display:inline-block;padding:9px 20px;border-radius:999px;font-size:var(--fs-note);font-weight:600;
 color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);
@@ -201,7 +200,6 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 
 <section class="page-header">
   <h1 class="project-name">BookCap: Local-to-Global Captioning for Audiobook Generation</h1>
-  <p class="project-tagline" data-i18n="tagline">Local-to-Global Captioning for Audiobook Generation · Listening Demo</p>
   <nav class="quicknav">
     <a class="btn" href="#sec-timbre" data-i18n="nav1">① 音色设计</a>
     <a class="btn" href="#sec-ablation" data-i18n="nav2">② Caption 消融</a>
@@ -437,7 +435,6 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 /* ---------- i18n (UI only; sample data stays as-is) ---------- */
 var I18N={
  zh:{nav1:"① 音色描述试听",nav2:"② Caption 消融试听",
-     tagline:"面向有声书生成的 Local-to-Global Captioning · 在线试听 Demo",
      abt:"摘要",
      fig1:"整体流水线与模型结构：(a) 面向有声书的长音频 captioning；(b) Text-to-Timbre 模型结构；(c) Scene-Instruct-TTS 模型结构。",
      cont:"主要贡献",
@@ -459,7 +456,6 @@ var I18N={
      abplayall:"播放整段",
      footer:"ICASSP 投稿配套试听页 · 静态站点（GitHub Pages）"},
  en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
-     tagline:"Local-to-Global Captioning for Audiobook Generation · Listening Demo",
      abt:"Abstract",
      fig1:"Overview of the proposed framework: (a) Local-to-Global audiobook captioning; (b) Text-to-Timbre generation with timbre caption text; (c) Scene-Instruct-TTS conditioned on speaker embedding, transcript, scene, and instruction.",
      cont:"Contributions",
