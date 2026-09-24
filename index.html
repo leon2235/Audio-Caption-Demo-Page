@@ -461,7 +461,7 @@ var I18N={
  en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
      tagline:"Local-to-Global Captioning for Audiobook Generation · Listening Demo",
      abt:"Abstract",
-     fig1:"Overview of the pipeline and the model structures: (a) audiobook-oriented long audio captioning; (b) Text-to-Timbre; (c) Scene-Instruct-TTS.",
+     fig1:"Overview of the proposed framework: (a) Local-to-Global audiobook captioning; (b) Text-to-Timbre generation with timbre caption text; (c) Scene-Instruct-TTS conditioned on speaker embedding, transcript, scene, and instruction.",
      cont:"Contributions",
      c1:"<b>Audiobook-oriented audio captioning.</b> We develop a local-to-global pipeline that annotates each speech segment along four dimensions: <b>timbre, text, scene, and instruct</b>. These annotations describe the character's voice, spoken content, narrative context, and delivery, respectively. We also use a domain-adapted age classifier to improve the perceived-age annotations.",
      c2:"<b>Fine-grained text-to-timbre generation.</b> We develop a Text-to-Timbre (TTT) model that generates speaker embeddings from detailed timbre descriptions. Its cross-attention mechanism conditions the generated embedding on token-level textual information, allowing the model to capture multiple vocal attributes within a description.",
