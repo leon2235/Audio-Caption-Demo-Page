@@ -350,7 +350,7 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 <section id="sec-audiobook">
   <div class="sec-head">
     <h2><span data-i18n="s3t">3. 有声书长音频 Caption 对照</span></h2>
-    <p data-dq-i18n="intro">本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频直接输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。</p>
+    <p data-dq-i18n="intro">本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。</p>
   </div>
   <div class="dq-tabs" role="tablist" aria-label="Caption methods">
     <button type="button" id="dq-tab-bookcap" role="tab" aria-controls="dq-bookcap-panel" aria-selected="true" tabindex="0">BookCap · Local-to-Global</button>
@@ -697,7 +697,7 @@ abPlay=function(id){
   const tabs=[document.getElementById('dq-tab-bookcap'),document.getElementById('dq-tab-direct')];
   const panels=[document.getElementById('dq-bookcap-panel'),panel];
   const words={
-    zh:{intro:'本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频直接输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。',
+    zh:{intro:'本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。',
       bookDesc:'保留原页面的句级标注与场景分组。',directDesc:'单次输入完整章节；本页仅展示与试听片段对应的预测标注，未提供参考转写、边界或说话人信息。',
       scenes:'展示场景',segments:'展示片段',speakers:'说话人 ID',predScenes:'展示预测场景',predSegments:'展示预测片段',predSpeakers:'展示预测说话人 ID',
       caveat:'BookCap 展示章节流程的对应标注；Direct 展示一次性处理完整章节后，在同一试听范围内的预测结果。两种方法保留各自的场景划分、片段边界与说话人编号，便于结合试听比较角色区分及音色、演播细节。本示例为定性展示，数量差异不代表准确率。',
