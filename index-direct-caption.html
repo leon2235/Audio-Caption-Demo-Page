@@ -204,12 +204,6 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 #dq-player{width:100%;height:36px;display:block}
 #dq-direct-panel .gtext{white-space:pre-wrap;overflow-wrap:anywhere}
 #dq-direct-panel .gmeta{white-space:nowrap}
-.dq-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.dq-actions button{font-size:13px}
-.dq-record{margin:14px 0;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 16px}
-.dq-record>summary{cursor:pointer;color:var(--brand);font-weight:650;font-size:14px}
-.dq-record .dq-actions{margin-top:12px}
-.dq-record pre{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:8px;max-height:360px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#f7f9fc;font:12px/1.7 ui-monospace,Consolas,monospace;tab-size:2}
 @media(max-width:640px){.dq-tabs button{min-width:140px}}
 </style>
 </head>
@@ -449,9 +443,6 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
     </div>
     <div id="dq-speaker-legend" class="legend"></div>
     <div id="dq-scenes" class="timeline"></div>
-    <details class="dq-record"><summary data-dq-i18n="experimentTitle">实验设置与输出说明</summary><p class="dq-note" data-dq-i18n="timestampNote">卡片显示试听相对时间；悬停时间标签可查看模型原始章节时间。试听片段对应章节 07:11.56–12:03.21，播放场景时仅播放与试听范围的交集。原始预测标注不作修改。</p><p class="dq-note" data-dq-i18n="protocol">使用既定 Prompt 单次直接输入完整 MP3（15 分 21.89 秒），未裁切或重新编码。原始回复有两处 JSON 引号错误：第 109 行多余引号、第 370 行缺失引号；仅在可视化解析副本中修复，原始回复完整保留。页面按试听窗口筛选标注并换算播放位置，不修改任何字幕、caption、说话人编号或预测时间，不重新分段。</p><pre id="dq-experiment"></pre></details>
-    <details class="dq-record"><summary data-dq-i18n="promptTitle">查看完整 Prompt</summary><div class="dq-actions"><button type="button" id="dq-download-prompt" data-dq-i18n="downloadPrompt">下载 Prompt</button></div><pre id="dq-prompt"></pre></details>
-    <details class="dq-record"><summary data-dq-i18n="rawTitle">查看完整章节原始输出</summary><div class="dq-actions"><button type="button" id="dq-download-raw" data-dq-i18n="downloadRaw">下载完整章节原始回复</button><button type="button" id="dq-download-json" data-dq-i18n="downloadJson">下载完整章节语法修复 JSON</button></div><pre id="dq-raw"></pre></details>
   </div>
 </section>
 
@@ -846,9 +837,6 @@ abPlay=function(id){
   let directWrapTick=false;
   window.addEventListener('scroll',()=>{if(!directWrapTick){directWrapTick=true;requestAnimationFrame(()=>{updateDirectWrap();directWrapTick=false;});}},{passive:true});
   window.addEventListener('resize',updateDirectWrap);
-  document.getElementById('dq-prompt').textContent=data.prompt;
-  document.getElementById('dq-raw').textContent=data.raw;
-  document.getElementById('dq-experiment').textContent=JSON.stringify(data.experiment,null,2);
   document.getElementById('dq-playall').addEventListener('click',()=>playRange({kind:'full'}));
   player.addEventListener('timeupdate',()=>{
     if(stopAt!==null&&player.currentTime>=stopAt){stopAt=null;statusKey='ended';player.pause();updateStatus();}
@@ -871,13 +859,6 @@ abPlay=function(id){
       if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();selectTab(event.key==='Home'?0:event.key==='End'?1:1-index,true);}
     });
   });
-  function download(filename,text,type){
-    const url=URL.createObjectURL(new Blob([text],{type:type+';charset=utf-8'}));const link=make('a');link.href=url;link.download=filename;
-    document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }
-  document.getElementById('dq-download-prompt').addEventListener('click',()=>download('direct-caption-prompt.txt',data.prompt,'text/plain'));
-  document.getElementById('dq-download-raw').addEventListener('click',()=>download('direct-caption-response.txt',data.raw,'text/plain'));
-  document.getElementById('dq-download-json').addEventListener('click',()=>download('direct-fullchapter.syntax-normalized.json',JSON.stringify(caption,null,2),'application/json'));
   I18N.zh.s3t='3. 有声书长音频 Caption 对照';I18N.en.s3t='3. Long-form Audiobook Caption Comparison';
   I18N.zh.footer='本地对照预览 · 原版页面保持不变';I18N.en.footer='Local comparison preview · Original page preserved';
   document.title='Local preview · '+document.title;
