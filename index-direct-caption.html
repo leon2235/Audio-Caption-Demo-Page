@@ -446,7 +446,6 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
   </div>
 </section>
 
-<footer data-i18n="footer">本地对照预览 · 原版页面保持不变</footer>
 
 </div><!-- /wrap -->
 
@@ -860,7 +859,6 @@ abPlay=function(id){
     });
   });
   I18N.zh.s3t='3. 有声书长音频 Caption 对照';I18N.en.s3t='3. Long-form Audiobook Caption Comparison';
-  I18N.zh.footer='本地对照预览 · 原版页面保持不变';I18N.en.footer='Local comparison preview · Original page preserved';
   document.title='Local preview · '+document.title;
   function translate(){
     document.querySelectorAll('[data-dq-i18n]').forEach(el=>{el.textContent=t(el.dataset.dqI18n);});
