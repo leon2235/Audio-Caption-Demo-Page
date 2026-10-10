@@ -96,6 +96,10 @@ section{padding-top:26px}
 hr.divider{height:1px;border:0;margin:8px 0 0;background:#d97706}
 .sec-head{margin-bottom:14px}
 .sec-head p{color:var(--sub);font-size:var(--fs-note);line-height:1.75}
+#sec-audiobook .sec-head .caption-intro{margin-top:14px;padding:16px 20px;background:var(--gold-bg);border:1px solid #ecd7ad;border-left:4px solid var(--gold-line);border-radius:var(--radius-sm);color:var(--ink);font-weight:600;line-height:1.9}
+#sec-audiobook .caption-intro p{color:inherit;line-height:inherit;margin:0}
+#sec-audiobook .caption-intro .caption-observations{margin-top:12px;padding-top:12px;border-top:1px solid #ecd7ad;font-weight:400}
+#sec-audiobook .caption-observations strong{color:var(--gold);font-weight:700}
 button{border:1px solid var(--line);background:var(--card);border-radius:8px;
 padding:8px 14px;font-size:14px;cursor:pointer;color:var(--ink)}
 button:hover{border-color:#c3cad6}
@@ -127,7 +131,7 @@ margin-right:4px;background:#9ca3af;vertical-align:1px}
 .badge.star .dot{background:var(--gold-line)}
 .badge.star{color:var(--gold)}
 
-/* ===== section 3: audiobook timeline ===== */
+/* ===== section 1: audiobook timeline ===== */
 .ab-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);
 padding:12px 14px;margin-bottom:16px;box-shadow:var(--shadow)}
 .ab-panel audio{display:block;width:100%;height:38px}
@@ -205,6 +209,99 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 #dq-direct-panel .gtext{white-space:pre-wrap;overflow-wrap:anywhere}
 #dq-direct-panel .gmeta{white-space:nowrap}
 @media(max-width:640px){.dq-tabs button{min-width:140px}}
+#sec-timbre .legend{padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.75}
+#sec-timbre .vd-matrix{--vd-info-width:30%;counter-reset:voice-sample;background:transparent;border:0;box-shadow:none}
+#sec-timbre .vd-column-head{display:grid;grid-template-columns:minmax(0,var(--vd-info-width)) repeat(5,minmax(0,1fr));position:sticky;top:3px;z-index:30;margin-bottom:10px;background:#edf2f8;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 8px rgba(16,24,40,.05)}
+#sec-timbre .vd-context{display:flex;align-items:center;padding:10px 16px;color:var(--sub);font-size:12px;font-weight:650}
+#sec-timbre .vd-context::before{content:'音色描述 / 合成文本'}
+html[lang="en"] #sec-timbre .vd-context::before{content:'Timbre / Synthesis text'}
+#sec-timbre .vd-model{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62px;padding:10px 6px;text-align:center;font-size:12px;font-weight:700;line-height:1.5;color:var(--brand)}
+#sec-timbre .vd-model small{font-size:11px;font-weight:500;color:var(--sub)}
+#sec-timbre .vd-model.vd-ours{background:var(--gold-bg);color:var(--gold);box-shadow:inset 0 3px 0 var(--gold-line);border-radius:0 9px 9px 0}
+#sec-timbre .vd-model.vd-ours small{color:var(--gold)}
+#sec-timbre .card{display:grid;grid-template-columns:minmax(0,var(--vd-info-width)) minmax(0,1fr);grid-template-rows:auto auto;gap:0;padding:0;margin:0 0 10px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:none;overflow:hidden;counter-increment:voice-sample}
+#sec-timbre .card>.cap,#sec-timbre .card>.text{grid-column:1;min-width:0;margin:0;padding:12px 14px;font-size:16px;line-height:1.8}
+#sec-timbre .card>.cap{grid-row:1;position:relative;padding-left:49px;background:#f8fafc;color:#354356}
+#sec-timbre .card>.cap::before{content:counter(voice-sample,decimal-leading-zero);position:absolute;left:12px;top:14px;font-size:12px;font-weight:700;color:var(--brand);background:#e5ecf5;border-radius:6px;padding:1px 7px}
+#sec-timbre .cap .tag{display:block;width:max-content;padding:0;background:none;margin:0 0 3px;color:var(--sub);font-size:13px;font-weight:650;letter-spacing:.03em}
+#sec-timbre .card>.text{grid-row:2;padding:4px 14px 12px 49px;border:0;border-radius:0;background:#f8fafc;color:var(--ink)}
+#sec-timbre .card>.text::before{content:'合成文本';display:block;margin-bottom:3px;color:var(--sub);font-size:13px;font-weight:650;letter-spacing:.03em}
+html[lang="en"] #sec-timbre .card>.text::before{content:'Synthesis text'}
+#sec-timbre .grid{grid-column:2;grid-row:1/3;grid-template-columns:repeat(5,minmax(0,1fr));min-width:0;gap:0;padding:6px 0;border:0;background:#fff}
+#sec-timbre .cell{justify-content:center;padding:8px 6px;gap:6px;min-width:0;background:#fff;border:0;border-radius:8px;box-shadow:none}
+#sec-timbre .cell>.badge{display:none}
+#sec-timbre .cell.star{background:var(--gold-bg)}
+#sec-timbre .cell:hover{background:#f0f4fa}
+#sec-timbre .cell.star:hover{background:#fff0d4}
+#sec-timbre .cell.playing{background:#fff0d4;box-shadow:inset 0 0 0 2px var(--gold-line)}
+#sec-timbre .cell audio{height:34px}
+@media(max-width:960px){
+  #sec-timbre .vd-column-head{display:none}
+  #sec-timbre .card{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  #sec-timbre .card>.cap{grid-column:1;grid-row:1}
+  #sec-timbre .card>.text{grid-column:2;grid-row:1;padding:12px 14px}
+  #sec-timbre .grid{grid-column:1/-1;grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:4px;padding:8px}
+  #sec-timbre .cell>.badge{display:block;font-size:12px;line-height:20px}
+  #sec-timbre .cell.star{grid-column:1/-1}
+}
+@media(max-width:520px){
+  #sec-timbre .card{grid-template-columns:minmax(0,1fr)}
+  #sec-timbre .card>.cap{padding:12px 12px 6px 49px}
+  #sec-timbre .card>.text{grid-column:1;grid-row:2;padding:6px 12px 12px 49px;border:0}
+  #sec-timbre .grid{grid-row:3}
+}
+#sec-ablation .legend{padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.75}
+#sec-ablation .ca-matrix{--ca-info-width:30%;counter-reset:ablation-sample;background:transparent;border:0;box-shadow:none}
+#sec-ablation .ca-column-head{display:grid;grid-template-columns:minmax(0,var(--ca-info-width)) repeat(6,minmax(0,1fr));position:sticky;top:3px;z-index:30;margin-bottom:10px;background:#edf2f8;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 8px rgba(16,24,40,.05)}
+#sec-ablation .ca-context{display:flex;align-items:center;padding:10px 16px;color:var(--sub);font-size:12px;font-weight:650}
+#sec-ablation .ca-context::before{content:'合成文本 / 场景 / 指令'}
+html[lang="en"] #sec-ablation .ca-context::before{content:'Text / Scene / Instruction'}
+#sec-ablation .ca-model{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70px;padding:10px 6px;text-align:center;font-size:12px;font-weight:700;line-height:1.5;color:var(--brand)}
+#sec-ablation .ca-model small{font-size:11px;font-weight:500;color:var(--sub)}
+#sec-ablation .ca-model.ca-ours{background:var(--gold-bg);color:var(--gold);box-shadow:inset 0 3px 0 var(--gold-line);border-radius:0 9px 9px 0}
+#sec-ablation .ca-model.ca-ours small{color:var(--gold)}
+#sec-ablation .card{display:grid;grid-template-columns:minmax(0,var(--ca-info-width)) minmax(0,1fr);grid-template-rows:auto auto;gap:0;padding:0;margin:0 0 10px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:none;overflow:hidden;counter-increment:ablation-sample}
+#sec-ablation .card>.cap,#sec-ablation .card>.text{grid-column:1;min-width:0;margin:0;padding:12px 14px;font-size:16px;line-height:1.8}
+#sec-ablation .card>.cap{grid-row:1;position:relative;padding-left:49px;background:#f8fafc;color:#354356}
+#sec-ablation .card>.cap::before{content:counter(ablation-sample,decimal-leading-zero);position:absolute;left:12px;top:14px;font-size:12px;font-weight:700;color:var(--brand);background:#e5ecf5;border-radius:6px;padding:1px 7px}
+#sec-ablation .cap .tag{display:block;width:max-content;padding:0;background:none;margin:0 0 3px;color:var(--sub);font-size:13px;font-weight:650;letter-spacing:.03em}
+#sec-ablation .card>.text{grid-row:2;padding:4px 14px 12px 49px;border:0;border-radius:0;background:#f8fafc;color:var(--ink)}
+#sec-ablation .card>.text::before{content:'合成文本';display:block;margin-bottom:3px;color:var(--sub);font-size:13px;font-weight:650;letter-spacing:.03em}
+html[lang="en"] #sec-ablation .card>.text::before{content:'Synthesis text'}
+#sec-ablation .grid{grid-column:2;grid-row:1/3;grid-template-columns:repeat(6,minmax(0,1fr));min-width:0;gap:0;padding:6px 0;border:0;background:#fff}
+#sec-ablation .cell{justify-content:center;padding:8px 6px;gap:6px;min-width:0;background:#fff;border:0;border-radius:8px;box-shadow:none}
+#sec-ablation .cell>.badge{display:none}
+#sec-ablation .cell.star{background:var(--gold-bg)}
+#sec-ablation .cell:hover{background:#f0f4fa}
+#sec-ablation .cell.star:hover{background:#fff0d4}
+#sec-ablation .cell.playing{background:#fff0d4;box-shadow:inset 0 0 0 2px var(--gold-line)}
+#sec-ablation .cell audio{height:34px}
+@media(max-width:960px){
+  #sec-ablation .ca-column-head{display:none}
+  #sec-ablation .card{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  #sec-ablation .card>.cap{grid-column:1;grid-row:1}
+  #sec-ablation .card>.text{grid-column:2;grid-row:1;padding:12px 14px}
+  #sec-ablation .grid{grid-column:1/-1;grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:4px;padding:8px}
+  #sec-ablation .cell>.badge{display:block;font-size:12px;line-height:20px}
+  #sec-ablation .cell.star{grid-column:1/-1}
+}
+@media(max-width:520px){
+  #sec-ablation .card{grid-template-columns:minmax(0,1fr)}
+  #sec-ablation .card>.cap{padding:12px 12px 6px 49px}
+  #sec-ablation .card>.text{grid-column:1;grid-row:2;padding:6px 12px 12px 49px;border:0}
+  #sec-ablation .grid{grid-row:3}
+}
+
+#sec-ablation .card>.text{grid-row:1;position:relative;padding:12px 14px 6px 49px}
+#sec-ablation .card>.text::after{content:counter(ablation-sample,decimal-leading-zero);position:absolute;left:12px;top:14px;font-size:12px;font-weight:700;color:var(--brand);background:#e5ecf5;border-radius:6px;padding:1px 7px}
+#sec-ablation .card>.cap{grid-row:2;padding:6px 14px 12px 49px}
+#sec-ablation .card>.cap::before{content:none}
+#sec-ablation .cap .tag{margin-top:8px}
+#sec-ablation .cap .tag:first-child{margin-top:0}
+#sec-ablation .cap br{display:none}
+#sec-ablation .ca-model{overflow-wrap:anywhere}
+@media(max-width:960px){#sec-ablation .card>.text{grid-column:1;grid-row:1}#sec-ablation .card>.cap{grid-column:2;grid-row:1;padding:12px 14px}}
+@media(max-width:520px){#sec-ablation .card>.cap{grid-column:1;grid-row:2;padding:6px 12px 12px 49px}#sec-ablation .grid{grid-row:3}}
 </style>
 </head>
 <body>
@@ -213,9 +310,9 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 <section class="page-header">
   <h1 class="project-name">BookCap: Local-to-Global Captioning for Audiobook Generation</h1>
   <nav class="quicknav">
-    <a class="btn" href="#sec-timbre" data-i18n="nav1">① 音色设计</a>
-    <a class="btn" href="#sec-ablation" data-i18n="nav2">② Caption 消融</a>
-    <a class="btn" href="#sec-audiobook" data-i18n="nav3">③ 长音频 Caption</a>
+    <a class="btn" href="#sec-audiobook" data-i18n="nav3">① 长音频 Caption</a>
+    <a class="btn" href="#sec-timbre" data-i18n="nav1">② 音色设计</a>
+    <a class="btn" href="#sec-ablation" data-i18n="nav2">③ Caption 消融</a>
   </nav>
 </section>
 
@@ -248,109 +345,14 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 
 <hr class="divider">
 
-<!-- ================= Section 1: Voice Design ================= -->
-<section id="sec-timbre">
-  <div class="sec-head">
-    <h2><span data-i18n="s1t">1. 音色设计展示（Voice Design）</span></h2>
-    <p data-i18n="s1d">7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。</p>
-  </div>
-  <div class="legend" data-i18n="s1legend"><b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）</div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调偏低、低沉沙哑的老年男声，沧桑内敛、饱含阅历，适合人生纪实节目或岁月回忆旁白。</div>
-    <div class="text">回头看去，那些走过的弯路，也早已成为人生的一部分。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group31/moss_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group31/pool_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group31/qwen_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group31/voxcpm2_0031.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group31/ours_030.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调适中、清雅从容的中年女声，端庄知性、气质优雅，适合文化品牌代言或人文内容旁白。</div>
-    <div class="text">美并非浮于表面，它源于内在修养与经年累月的沉淀。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group70/moss_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group70/pool_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group70/qwen_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group70/voxcpm2_0070.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group70/ours_069.wav"></audio></div></div>
-  </div>
-
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调较高、语气神气十足的男孩嗓音，正义感强、爱扮英雄，适合英雄主题动画或男童玩具广告。</div>
-    <div class="text">别害怕，超级小队长来了，我一定会保护大家！</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group59/moss_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group59/pool_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group59/qwen_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group59/voxcpm2_0059.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group59/ours_058.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调适中、坚定热忱的少年男声，青春昂扬、正直向上，适合励志成长短片或正能量宣传。</div>
-    <div class="text">也许我们现在还不够强大，但努力会让梦想一点点靠近。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group46/moss_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group46/pool_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group46/qwen_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group46/voxcpm2_0046.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group46/ours_045.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调偏低、磁性浑厚的青年男声，深沉性感、富有魅力，适合男士护理广告或成熟向影视配音。</div>
-    <div class="text">无需刻意证明，真正的魅力，自会在细节中显现。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group51/moss_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group51/pool_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group51/qwen_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group51/voxcpm2_0051.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group51/ours_050.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调适中、慈和温暖的中年女声，温柔亲切、包容体贴，适合家庭温情广告或母婴健康内容。</div>
-    <div class="text">成长不必着急，我们会用耐心陪伴孩子走好每一步。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group63/moss_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group63/pool_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group63/qwen_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group63/voxcpm2_0063.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group63/ours_062.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="cap"><span class="tag">音色描述</span>音调适中、柔和苍老的老年女声，慈祥温暖、朴实自然，适合民间故事或亲子传承类有声书。</div>
-    <div class="text">从前啊，村口有一棵大槐树，树下藏着许多旧时光。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio controls preload="none" src="audio/timbre/group17/moss_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio controls preload="none" src="audio/timbre/group17/pool_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio controls preload="none" src="audio/timbre/group17/qwen_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/timbre/group17/voxcpm2_0017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/timbre/group17/ours_016.wav"></audio></div></div>
-  </div>
-
-  </section>
-
-<hr class="divider">
-
-<!-- ================= Section 2: Caption Ablation ================= -->
-<section id="sec-ablation" class="sec-ablation">
-  <div class="sec-head">
-    <h2><span data-i18n="s2t">2. Caption消融及对比展示</span></h2>
-    <p data-i18n="s2d">5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。</p>
-  </div>
-  <div class="legend" data-i18n="s2legend"><b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）</div>
-
-  <div class="card">
-    <div class="text">“我觉得对房地产，我有兴趣，也有敏感度。”“所以我下定决心，要到这个行业里面去。”</div>
-    <div class="cap"><span class="tag">scene</span>安静环境中，两人进行深度交流，一方讲述个人成长背景与职业选择，整体氛围感性且略带沉重，演播保持生活化与情感流露。<br><span class="tag">instruct</span>语气坚定，语速平稳，表达有条理，略带思考停顿，情绪平稳且自信。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_w_instruct_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group3/voxcpm2_w_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group3/ours_wo_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group3/ours_wo_scene_00036.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group3/ours_00036.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="text">小晨晨看着妹妹撒欢似的身影，像是被刚从羊圈里放出来的小羊羔一样，皱了皱眉，刚准备说两句，但是随即一想，这是幼儿园，应该没有危险，算了。</div>
-    <div class="cap"><span class="tag">scene</span>幼儿园户外场景，旁白描述孩子们见面互动，穿插儿童角色的轻快对话，整体氛围轻松活泼、充满童趣，演播保持生活化与角色声线的自然切换。<br><span class="tag">instruct</span>语气平稳，语速适中，尾音柔和，表达略带犹豫和自我劝解的意味。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_w_instruct_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group1/voxcpm2_w_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group1/ours_wo_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group1/ours_wo_scene_00011.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group1/ours_00011.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="text">“想法不错，可惜呀。在绝对的实力面前，雕虫小技又有何用？”</div>
-    <div class="cap"><span class="tag">scene</span>敌军指挥官分析战况并下达命令，语气自信傲慢，氛围沉稳中带有压迫感，演播保持威严叙述与低沉对话的平稳切换。<br><span class="tag">instruct</span>语调平稳，略带嘲讽和不屑，尾音上扬，语速缓慢，表达出居高临下的态度。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_w_instruct_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group5/voxcpm2_w_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group5/ours_wo_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group5/ours_wo_scene_00034.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group5/ours_00034.wav"></audio></div></div>
-  </div>
-
-
-  <div class="card">
-    <div class="text">无须道谢，这都是我应该做的，只是不知姐姐，还有什么吩咐</div>
-    <div class="cap"><span class="tag">scene</span>庭院及室内环境中，人物进行恭敬且略带紧张的交流，整体氛围庄重克制，演播保持沉稳叙述与对话的平稳切换。<br><span class="tag">instruct</span>语气平稳，略带恭敬和试探，语速适中，尾音柔和。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_w_instruct_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group4/voxcpm2_w_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group4/ours_wo_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group4/ours_wo_scene_00017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group4/ours_00017.wav"></audio></div></div>
-  </div>
-
-  <div class="card">
-    <div class="text">可是呢，这种性质极其恶劣的碎尸案，早一天侦破，就能早一天消除社会影响，对大众也有一个交代。因此，刘德民并不正面答应吴校长的话，而是说。</div>
-    <div class="cap"><span class="tag">scene</span>室内对话收尾，警方拒绝请求并离开，氛围由紧张转为平静，演播保持客观陈述与动作描写的平稳过渡。<br><span class="tag">instruct</span>语调平稳，语速偏慢，表达正式，带陈述语气，情绪克制，尾音略上扬。</div>
-    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_w_instruct_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio controls preload="none" src="audio/ablation/group2/voxcpm2_w_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio controls preload="none" src="audio/ablation/group2/ours_wo_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio controls preload="none" src="audio/ablation/group2/ours_wo_scene_00018.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio controls preload="none" src="audio/ablation/group2/ours_00018.wav"></audio></div></div>
-  </div>
-
-  </section>
-
-<hr class="divider">
-
-<!-- ================= Section 3: Audiobook Captions ================= -->
+<!-- ================= Section 1: Audiobook Captions ================= -->
 <section id="sec-audiobook">
   <div class="sec-head">
-    <h2><span data-i18n="s3t">3. 有声书长音频 Caption 对照</span></h2>
-    <p data-dq-i18n="intro">本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。</p>
+    <h2><span data-i18n="s3t">1. 有声书长音频 Caption 对照</span></h2>
+    <div class="caption-intro">
+      <p data-dq-i18n="intro">本节对比 BookCap 与直接输入长音频的标注结果。BookCap 按照上述 Local-to-Global 流程处理完整章节；Direct 则将整章长音频一次性输入语音理解模型生成 caption。原音频约 15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注。</p>
+      <p class="caption-observations"><strong data-dq-i18n="observationsTitle">两种方法的主要差异：</strong><span data-dq-i18n="observations">BookCap 对音色特征以及语气、语速、停顿等演播细节的描述更具体；其场景划分覆盖更连续的叙事范围，场景描述更侧重整体氛围及其对演播方式的影响。相比之下，Direct 的场景描述更偏向文本剧情概括，与声学线索关联较小。</span></p>
+    </div>
   </div>
   <div class="dq-tabs" role="tablist" aria-label="Caption methods">
     <button type="button" id="dq-tab-bookcap" role="tab" aria-controls="dq-bookcap-panel" aria-selected="true" tabindex="0">BookCap · Local-to-Global</button>
@@ -447,6 +449,125 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 </section>
 
 
+<hr class="divider">
+
+<!-- ================= Section 2: Voice Design ================= -->
+<section id="sec-timbre">
+  <div class="sec-head">
+    <h2><span data-i18n="s1t">2. 音色设计展示（Voice Design）</span></h2>
+    <p data-i18n="s1d">7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。</p>
+  </div>
+  <div class="legend" data-i18n="s1legend"><b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Ours</b>: Ours（金色高亮）</div>
+
+  <div class="vd-matrix">
+    <div class="vd-column-head" aria-hidden="true">
+      <div class="vd-context"></div>
+      <div class="vd-model">Moss-VG</div>
+      <div class="vd-model">Qwen3-TTS-VD</div>
+      <div class="vd-model">VoxCPM2</div>
+      <div class="vd-model">Ours<small>w/ Text Pooling</small></div>
+      <div class="vd-model vd-ours">Ours</div>
+    </div>
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调偏低、低沉沙哑的老年男声，沧桑内敛、饱含阅历，适合人生纪实节目或岁月回忆旁白。</div>
+    <div class="text">回头看去，那些走过的弯路，也早已成为人生的一部分。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group31" controls preload="none" src="audio/timbre/group31/moss_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group31" controls preload="none" src="audio/timbre/group31/qwen_030.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group31" controls preload="none" src="audio/timbre/group31/voxcpm2_0031.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group31" controls preload="none" src="audio/timbre/group31/pool_030.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group31" controls preload="none" src="audio/timbre/group31/ours_030.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、清雅从容的中年女声，端庄知性、气质优雅，适合文化品牌代言或人文内容旁白。</div>
+    <div class="text">美并非浮于表面，它源于内在修养与经年累月的沉淀。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group70" controls preload="none" src="audio/timbre/group70/moss_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group70" controls preload="none" src="audio/timbre/group70/qwen_069.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group70" controls preload="none" src="audio/timbre/group70/voxcpm2_0070.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group70" controls preload="none" src="audio/timbre/group70/pool_069.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group70" controls preload="none" src="audio/timbre/group70/ours_069.wav"></audio></div></div>
+  </div>
+
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调较高、语气神气十足的男孩嗓音，正义感强、爱扮英雄，适合英雄主题动画或男童玩具广告。</div>
+    <div class="text">别害怕，超级小队长来了，我一定会保护大家！</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group59" controls preload="none" src="audio/timbre/group59/moss_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group59" controls preload="none" src="audio/timbre/group59/qwen_058.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group59" controls preload="none" src="audio/timbre/group59/voxcpm2_0059.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group59" controls preload="none" src="audio/timbre/group59/pool_058.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group59" controls preload="none" src="audio/timbre/group59/ours_058.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、坚定热忱的少年男声，青春昂扬、正直向上，适合励志成长短片或正能量宣传。</div>
+    <div class="text">也许我们现在还不够强大，但努力会让梦想一点点靠近。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group46" controls preload="none" src="audio/timbre/group46/moss_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group46" controls preload="none" src="audio/timbre/group46/qwen_045.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group46" controls preload="none" src="audio/timbre/group46/voxcpm2_0046.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group46" controls preload="none" src="audio/timbre/group46/pool_045.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group46" controls preload="none" src="audio/timbre/group46/ours_045.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调偏低、磁性浑厚的青年男声，深沉性感、富有魅力，适合男士护理广告或成熟向影视配音。</div>
+    <div class="text">无需刻意证明，真正的魅力，自会在细节中显现。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group51" controls preload="none" src="audio/timbre/group51/moss_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group51" controls preload="none" src="audio/timbre/group51/qwen_050.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group51" controls preload="none" src="audio/timbre/group51/voxcpm2_0051.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group51" controls preload="none" src="audio/timbre/group51/pool_050.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group51" controls preload="none" src="audio/timbre/group51/ours_050.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、慈和温暖的中年女声，温柔亲切、包容体贴，适合家庭温情广告或母婴健康内容。</div>
+    <div class="text">成长不必着急，我们会用耐心陪伴孩子走好每一步。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group63" controls preload="none" src="audio/timbre/group63/moss_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group63" controls preload="none" src="audio/timbre/group63/qwen_062.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group63" controls preload="none" src="audio/timbre/group63/voxcpm2_0063.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group63" controls preload="none" src="audio/timbre/group63/pool_062.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group63" controls preload="none" src="audio/timbre/group63/ours_062.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><span class="tag">音色描述</span>音调适中、柔和苍老的老年女声，慈祥温暖、朴实自然，适合民间故事或亲子传承类有声书。</div>
+    <div class="text">从前啊，村口有一棵大槐树，树下藏着许多旧时光。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Moss-VG</span></div><audio aria-label="Moss-VG - group17" controls preload="none" src="audio/timbre/group17/moss_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Qwen3-TTS-VD</span></div><audio aria-label="Qwen3-TTS-VD - group17" controls preload="none" src="audio/timbre/group17/qwen_016.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group17" controls preload="none" src="audio/timbre/group17/voxcpm2_0017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">Ours_w_pool</span></div><audio aria-label="Ours_w_pool - group17" controls preload="none" src="audio/timbre/group17/pool_016.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group17" controls preload="none" src="audio/timbre/group17/ours_016.wav"></audio></div></div>
+  </div>
+
+  </div>
+  </section>
+
+<hr class="divider">
+
+<!-- ================= Section 3: Caption Ablation ================= -->
+<section id="sec-ablation" class="sec-ablation">
+  <div class="sec-head">
+    <h2><span data-i18n="s2t">3. Caption消融及对比展示</span></h2>
+    <p data-i18n="s2d">5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。</p>
+  </div>
+  <div class="legend" data-i18n="s2legend"><b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）</div>
+
+  <div class="ca-matrix">
+    <div class="ca-column-head" aria-hidden="true">
+      <div class="ca-context"></div>
+      <div class="ca-model">VoxCPM2</div>
+      <div class="ca-model">VoxCPM2-I</div>
+      <div class="ca-model">VoxCPM2-SI</div>
+      <div class="ca-model">Ours w/o S-I</div>
+      <div class="ca-model">Ours w/o S</div>
+      <div class="ca-model ca-ours">Ours</div>
+    </div>
+  <div class="card">
+    <div class="text">“我觉得对房地产，我有兴趣，也有敏感度。”“所以我下定决心，要到这个行业里面去。”</div>
+    <div class="cap"><span class="tag">scene</span>安静环境中，两人进行深度交流，一方讲述个人成长背景与职业选择，整体氛围感性且略带沉重，演播保持生活化与情感流露。<br><span class="tag">instruct</span>语气坚定，语速平稳，表达有条理，略带思考停顿，情绪平稳且自信。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group3" controls preload="none" src="audio/ablation/group3/voxcpm2_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio aria-label="VoxCPM2-I - group3" controls preload="none" src="audio/ablation/group3/voxcpm2_w_instruct_00036.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio aria-label="VoxCPM2-SI - group3" controls preload="none" src="audio/ablation/group3/voxcpm2_w_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio aria-label="Ours w/o S-I - group3" controls preload="none" src="audio/ablation/group3/ours_wo_scene_instruct_00036.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio aria-label="Ours w/o S - group3" controls preload="none" src="audio/ablation/group3/ours_wo_scene_00036.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group3" controls preload="none" src="audio/ablation/group3/ours_00036.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">小晨晨看着妹妹撒欢似的身影，像是被刚从羊圈里放出来的小羊羔一样，皱了皱眉，刚准备说两句，但是随即一想，这是幼儿园，应该没有危险，算了。</div>
+    <div class="cap"><span class="tag">scene</span>幼儿园户外场景，旁白描述孩子们见面互动，穿插儿童角色的轻快对话，整体氛围轻松活泼、充满童趣，演播保持生活化与角色声线的自然切换。<br><span class="tag">instruct</span>语气平稳，语速适中，尾音柔和，表达略带犹豫和自我劝解的意味。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group1" controls preload="none" src="audio/ablation/group1/voxcpm2_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio aria-label="VoxCPM2-I - group1" controls preload="none" src="audio/ablation/group1/voxcpm2_w_instruct_00011.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio aria-label="VoxCPM2-SI - group1" controls preload="none" src="audio/ablation/group1/voxcpm2_w_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio aria-label="Ours w/o S-I - group1" controls preload="none" src="audio/ablation/group1/ours_wo_scene_instruct_00011.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio aria-label="Ours w/o S - group1" controls preload="none" src="audio/ablation/group1/ours_wo_scene_00011.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group1" controls preload="none" src="audio/ablation/group1/ours_00011.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">“想法不错，可惜呀。在绝对的实力面前，雕虫小技又有何用？”</div>
+    <div class="cap"><span class="tag">scene</span>敌军指挥官分析战况并下达命令，语气自信傲慢，氛围沉稳中带有压迫感，演播保持威严叙述与低沉对话的平稳切换。<br><span class="tag">instruct</span>语调平稳，略带嘲讽和不屑，尾音上扬，语速缓慢，表达出居高临下的态度。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group5" controls preload="none" src="audio/ablation/group5/voxcpm2_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio aria-label="VoxCPM2-I - group5" controls preload="none" src="audio/ablation/group5/voxcpm2_w_instruct_00034.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio aria-label="VoxCPM2-SI - group5" controls preload="none" src="audio/ablation/group5/voxcpm2_w_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio aria-label="Ours w/o S-I - group5" controls preload="none" src="audio/ablation/group5/ours_wo_scene_instruct_00034.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio aria-label="Ours w/o S - group5" controls preload="none" src="audio/ablation/group5/ours_wo_scene_00034.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group5" controls preload="none" src="audio/ablation/group5/ours_00034.wav"></audio></div></div>
+  </div>
+
+
+  <div class="card">
+    <div class="text">无须道谢，这都是我应该做的，只是不知姐姐，还有什么吩咐</div>
+    <div class="cap"><span class="tag">scene</span>庭院及室内环境中，人物进行恭敬且略带紧张的交流，整体氛围庄重克制，演播保持沉稳叙述与对话的平稳切换。<br><span class="tag">instruct</span>语气平稳，略带恭敬和试探，语速适中，尾音柔和。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group4" controls preload="none" src="audio/ablation/group4/voxcpm2_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio aria-label="VoxCPM2-I - group4" controls preload="none" src="audio/ablation/group4/voxcpm2_w_instruct_00017.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio aria-label="VoxCPM2-SI - group4" controls preload="none" src="audio/ablation/group4/voxcpm2_w_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio aria-label="Ours w/o S-I - group4" controls preload="none" src="audio/ablation/group4/ours_wo_scene_instruct_00017.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio aria-label="Ours w/o S - group4" controls preload="none" src="audio/ablation/group4/ours_wo_scene_00017.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group4" controls preload="none" src="audio/ablation/group4/ours_00017.wav"></audio></div></div>
+  </div>
+
+  <div class="card">
+    <div class="text">可是呢，这种性质极其恶劣的碎尸案，早一天侦破，就能早一天消除社会影响，对大众也有一个交代。因此，刘德民并不正面答应吴校长的话，而是说。</div>
+    <div class="cap"><span class="tag">scene</span>室内对话收尾，警方拒绝请求并离开，氛围由紧张转为平静，演播保持客观陈述与动作描写的平稳过渡。<br><span class="tag">instruct</span>语调平稳，语速偏慢，表达正式，带陈述语气，情绪克制，尾音略上扬。</div>
+    <div class="grid"><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2</span></div><audio aria-label="VoxCPM2 - group2" controls preload="none" src="audio/ablation/group2/voxcpm2_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-I</span></div><audio aria-label="VoxCPM2-I - group2" controls preload="none" src="audio/ablation/group2/voxcpm2_w_instruct_00018.wav"></audio></div><div class="cell"><div class="badge"><span class="dot"></span><span class="nm">VoxCPM2-SI</span></div><audio aria-label="VoxCPM2-SI - group2" controls preload="none" src="audio/ablation/group2/voxcpm2_w_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S-I</span></div><audio aria-label="Ours w/o S-I - group2" controls preload="none" src="audio/ablation/group2/ours_wo_scene_instruct_00018.wav"></audio></div><div class="cell ours"><div class="badge ours"><span class="dot"></span><span class="nm">Ours w/o S</span></div><audio aria-label="Ours w/o S - group2" controls preload="none" src="audio/ablation/group2/ours_wo_scene_00018.wav"></audio></div><div class="cell star"><div class="badge star"><span class="dot"></span><span class="nm">Ours</span></div><audio aria-label="Ours - group2" controls preload="none" src="audio/ablation/group2/ours_00018.wav"></audio></div></div>
+  </div>
+
+    </div>
+  </section>
+
 </div><!-- /wrap -->
 
 
@@ -462,7 +583,7 @@ color:var(--sub);font-size:var(--fs-foot);border-top:1px solid var(--line)}
 <script>
 /* ---------- i18n (UI only; sample data stays as-is) ---------- */
 var I18N={
- zh:{nav1:"① 音色描述试听",nav2:"② Caption 消融试听",
+ zh:{nav1:"② 音色描述试听",nav2:"③ Caption 消融试听",
      abt:"摘要",
      fig1:"整体流水线与模型结构：(a) 面向有声书的长音频 captioning；(b) Text-to-Timbre 模型结构；(c) Scene-Instruct-TTS 模型结构。",
      cont:"主要贡献",
@@ -471,19 +592,19 @@ var I18N={
      c3:"<b>面向有声书合成的 Scene-Instruct-TTS。</b>我们以预训练 TTS 骨干网络为基础构建 Scene-Instruct-TTS，使其同时以说话人嵌入、转写文本、场景描述与演播指令为条件，生成与指定角色及叙事语境相匹配的语音。",
      abstract:"专业有声书录音为角色音色与富有表现力的演播提供了丰富的范例。然而，为其做 caption 标注需要在粒度与上下文之间权衡：章节级标注往往只能产生粗粒度的描述，片段级标注则容易丢失周围的叙事语境。为此，我们提出 <b>local-to-global captioning 流水线</b>：先逐段分析语音片段，再利用其按时间排序的转写与 caption 推断章节级场景上下文。该流水线沿<b>音色、文本、场景、演播</b>四个维度对每个片段进行标注。这些标注将声音表演与周围叙事关联起来，且无需一次性对整章音频进行标注。我们用这些标注训练了 <b>Text-to-Timbre</b>（由音色描述生成说话人嵌入）与 <b>Scene-Instruct-TTS</b>（由叙事场景与演播指令合成语音）。人工评估显示，我们的系统在<b>角色匹配度（3.72）</b>与<b>语境适切性（3.86）</b>上均取得对比系统中最高的平均分。",
      authors:"李阳彪<sup>1*</sup>、杨镇川<sup>2*</sup>、邢晓芬<sup>1†</sup>、谢柳飞<sup>2</sup>、华桦<sup>2</sup>、孙欣然<sup>2</sup>、陈梦<sup>2</sup>、吴斌<sup>2</sup><br><span class='affil'><sup>1</sup>华南理工大学　<sup>2</sup>腾讯音乐娱乐</span><br><span class='thanks'>*同等贡献　†通讯作者</span>",
-     s1t:"1. 音色设计展示（Voice Design）",
+     s1t:"2. 音色设计展示（Voice Design）",
      s1d:"7 组样例。组内 5 个系统使用同一条音色描述与同一段合成文本，对比音色还原度与听感。",
-     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours（金色高亮）",
-     s2t:"2. Caption消融及对比展示",
+     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Ours</b>: Ours（金色高亮）",
+     s2t:"3. Caption消融及对比展示",
      s2d:"5 组样例。组内 6 条音频由同一段文本在三种描述配置（无 / 仅指令描述 / 场景 + 指令描述）下合成，对比场景与指令描述对演播表现力与场景匹配度的作用。",
      s2legend:"<b>VoxCPM2</b>：无附加 caption　<b>VoxCPM2-I</b>：仅 instruction caption　<b>VoxCPM2-SI</b>：scene + instruction captions<br><b>Ours w/o S-I</b>：无 caption　<b>Ours w/o S</b>：仅 instruction caption　<b>Ours</b>：scene + instruction captions（完整版）",
-     nav3:"③ 长音频 Caption",
-     s3t:"3. 有声书长音频 Caption 展示（句级 · 时间轴对齐）",
+     nav3:"① 长音频 Caption",
+     s3t:"1. 有声书长音频 Caption 展示（句级 · 时间轴对齐）",
      s3d:"BookCap 为每句话标注字幕、音色描述与演播指令，并与时间轴对齐；点击任意片段定位试听，点击场景组头播放整组。",
      s3legend:"<span style='color:#326fae;font-weight:600'>■ 说话人 0</span> ｜ <span style='color:#277963;font-weight:600'>■ 说话人 2</span> ｜ <span style='color:#7a5fa0;font-weight:600'>■ 说话人 3</span> ｜ <span style='color:#a04a68;font-weight:600'>■ 说话人 4</span>",
      abplayall:"播放整段",
      footer:"ICASSP 投稿配套试听页 · 静态站点（GitHub Pages）"},
- en:{nav1:"① Voice Design",nav2:"② Caption Ablation",
+ en:{nav1:"② Voice Design",nav2:"③ Caption Ablation",
      abt:"Abstract",
      fig1:"Overview of the proposed framework: (a) Local-to-Global audiobook captioning; (b) Text-to-Timbre generation with timbre caption text; (c) Scene-Instruct-TTS conditioned on speaker embedding, transcript, scene, and instruction.",
      cont:"Contributions",
@@ -492,14 +613,14 @@ var I18N={
      c3:"<b>Scene-Instruct-TTS for audiobook synthesis.</b> We develop Scene-Instruct-TTS by adapting a pretrained TTS backbone to jointly condition on speaker embeddings, transcripts, scene descriptions, and delivery instructions. The model generates character speech whose voice and delivery match the specified character and narrative context.",
      abstract:"Professional audiobook recordings provide rich examples of character voices and expressive delivery. However, captioning them involves a trade-off between granularity and context: chapter-level captioning tends to produce coarse descriptions, while segment-level captioning often misses the surrounding narrative. To address this problem, we propose a <b>local-to-global captioning pipeline</b>. It first analyzes individual speech segments and then uses their temporally ordered transcripts and captions to infer the chapter-level scene context. The pipeline annotates each segment along four dimensions: <b>timbre, text, scene, and instruct</b>. Together, these annotations connect vocal performance with the surrounding narrative without requiring the entire chapter audio to be captioned at once. We use these annotations to train <b>Text-to-Timbre</b>, which generates speaker embeddings from voice descriptions, and <b>Scene-Instruct-TTS</b>, which synthesizes speech from narrative scenes and delivery instructions. In human evaluation, our system achieves the highest mean scores for <b>character matching (3.72)</b> and <b>contextual appropriateness (3.86)</b> among the compared systems.",
      authors:"Yangbiao Li<sup>1*</sup>, Zhenchuan Yang<sup>2*</sup>, Xiaofen Xing<sup>1†</sup>, Liufei Xie<sup>2</sup>, Hua Hua<sup>2</sup>, Xinran Sun<sup>2</sup>, Meng Chen<sup>2</sup>, Bin Wu<sup>2</sup><br><span class='affil'><sup>1</sup>South China University of Technology　<sup>2</sup>Tencent Music Entertainment</span><br><span class='thanks'>*Equal contribution　†Corresponding author</span>",
-     s1t:"1. Voice Design",
+     s1t:"2. Voice Design",
      s1d:"7 groups. Within each group, 5 systems synthesize the same text with the same timbre description, for comparison of timbre similarity and perceptual quality.",
-     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours</b>: Ours (highlighted in gold)",
-     s2t:"2. Caption Ablation and Comparison",
+     s1legend:"<b>Moss-VG</b>: MOSS-VoiceGenerator　<b>Qwen3-TTS-VD</b>: Qwen3-TTS-12.5hz-VoiceDesign-1.7B　<b>VoxCPM2</b>: VoxCPM2　<b>Ours w/ Text Pooling</b>: pools the token-level text features into a single vector　<b>Ours</b>: Ours (highlighted in gold)",
+     s2t:"3. Caption Ablation and Comparison",
      s2d:"5 groups. Within each group, 6 audios of the same text are synthesized under three caption configurations (none / instruction only / scene + instruction), showing the effect of scene and instruction captions on expressiveness and scene matching.",
      s2legend:"<b>VoxCPM2</b>: no caption　<b>VoxCPM2-I</b>: instruction caption only　<b>VoxCPM2-SI</b>: scene + instruction captions<br><b>Ours w/o S-I</b>: no caption　<b>Ours w/o S</b>: instruction caption only　<b>Ours</b>: scene + instruction captions (full)",
-     nav3:"③ Audiobook Captions",
-     s3t:"3. Long-form Audiobook Captions (Sentence-level · Timeline-aligned)",
+     nav3:"① Audiobook Captions",
+     s3t:"1. Long-form Audiobook Captions (Sentence-level · Timeline-aligned)",
      s3d:"BookCap annotates each sentence with a transcript, a timbre caption and an instruction caption, aligned to the timeline. Click any segment to jump-listen, or a scene header to play the whole scene.",
      s3legend:"<span style='color:#326fae;font-weight:600'>■ Speaker 0</span> ｜ <span style='color:#277963;font-weight:600'>■ Speaker 2</span> ｜ <span style='color:#7a5fa0;font-weight:600'>■ Speaker 3</span> ｜ <span style='color:#a04a68;font-weight:600'>■ Speaker 4</span>",
      abplayall:"Play All",
@@ -516,7 +637,7 @@ function applyLang(){
 }
 document.getElementById("btn-lang").onclick=function(){lang=lang==="zh"?"en":"zh";applyLang();};
 
-/* ---------- section 3: audiobook timeline player ---------- */
+/* ---------- section 1: audiobook timeline player ---------- */
 var AB_DATA = {"grp_0": {"start": 0.0, "end": 92.65, "dur": 92.65, "group": true, "scene_id": 5, "n": 15}, "seg_65": {"start": 0.0, "end": 15.75, "dur": 15.75, "spk": 0, "seg_idx": 65}, "seg_66": {"start": 17.0, "end": 25.9, "dur": 8.9, "spk": 0, "seg_idx": 66}, "seg_67": {"start": 27.3, "end": 37.65, "dur": 10.35, "spk": 0, "seg_idx": 67}, "seg_68": {"start": 38.55, "end": 42.5, "dur": 3.95, "spk": 2, "seg_idx": 68}, "seg_69": {"start": 43.65, "end": 45.8, "dur": 2.15, "spk": 0, "seg_idx": 69}, "seg_70": {"start": 46.85, "end": 48.4, "dur": 1.55, "spk": 4, "seg_idx": 70}, "seg_71": {"start": 49.65, "end": 50.85, "dur": 1.2, "spk": 0, "seg_idx": 71}, "seg_72": {"start": 51.98, "end": 56.6, "dur": 4.62, "spk": 2, "seg_idx": 72}, "seg_73": {"start": 58.0, "end": 64.7, "dur": 6.7, "spk": 0, "seg_idx": 73}, "seg_74": {"start": 65.75, "end": 74.1, "dur": 8.35, "spk": 4, "seg_idx": 74}, "seg_75": {"start": 75.4, "end": 76.55, "dur": 1.15, "spk": 2, "seg_idx": 75}, "seg_76": {"start": 77.25, "end": 78.9, "dur": 1.65, "spk": 0, "seg_idx": 76}, "seg_77": {"start": 79.75, "end": 83.3, "dur": 3.55, "spk": 2, "seg_idx": 77}, "seg_78": {"start": 85.1, "end": 87.7, "dur": 2.6, "spk": 0, "seg_idx": 78}, "seg_79": {"start": 88.6, "end": 92.65, "dur": 4.05, "spk": 4, "seg_idx": 79}, "grp_1": {"start": 94.05, "end": 243.1, "dur": 149.05, "group": true, "scene_id": 6, "n": 26}, "seg_80": {"start": 94.05, "end": 97.3, "dur": 3.25, "spk": 0, "seg_idx": 80}, "seg_81": {"start": 98.5, "end": 104.0, "dur": 5.5, "spk": 2, "seg_idx": 81}, "seg_82": {"start": 105.8, "end": 111.8, "dur": 6.0, "spk": 0, "seg_idx": 82}, "seg_83": {"start": 113.35, "end": 115.75, "dur": 2.4, "spk": 0, "seg_idx": 83}, "seg_84": {"start": 116.65, "end": 124.75, "dur": 8.1, "spk": 4, "seg_idx": 84}, "seg_85": {"start": 126.25, "end": 130.05, "dur": 3.8, "spk": 0, "seg_idx": 85}, "seg_86": {"start": 131.08, "end": 134.85, "dur": 3.77, "spk": 4, "seg_idx": 86}, "seg_87": {"start": 136.2, "end": 140.9, "dur": 4.7, "spk": 2, "seg_idx": 87}, "seg_88": {"start": 141.8, "end": 143.2, "dur": 1.4, "spk": 0, "seg_idx": 88}, "seg_89": {"start": 144.3, "end": 145.95, "dur": 1.65, "spk": 4, "seg_idx": 89}, "seg_90": {"start": 147.2, "end": 148.55, "dur": 1.35, "spk": 0, "seg_idx": 90}, "seg_91": {"start": 149.7, "end": 151.3, "dur": 1.6, "spk": 0, "seg_idx": 91}, "seg_92": {"start": 152.15, "end": 162.85, "dur": 10.7, "spk": 2, "seg_idx": 92}, "seg_93": {"start": 164.48, "end": 166.3, "dur": 1.82, "spk": 0, "seg_idx": 93}, "seg_94": {"start": 167.15, "end": 170.65, "dur": 3.5, "spk": 4, "seg_idx": 94}, "seg_95": {"start": 171.35, "end": 172.8, "dur": 1.45, "spk": 0, "seg_idx": 95}, "seg_96": {"start": 174.1, "end": 176.25, "dur": 2.15, "spk": 0, "seg_idx": 96}, "seg_97": {"start": 177.75, "end": 184.1, "dur": 6.35, "spk": 2, "seg_idx": 97}, "seg_98": {"start": 185.28, "end": 193.35, "dur": 8.07, "spk": 0, "seg_idx": 98}, "seg_99": {"start": 194.6, "end": 204.55, "dur": 9.95, "spk": 0, "seg_idx": 99}, "seg_100": {"start": 206.0, "end": 206.8, "dur": 0.8, "spk": 2, "seg_idx": 100}, "seg_101": {"start": 207.9, "end": 213.95, "dur": 6.05, "spk": 0, "seg_idx": 101}, "seg_102": {"start": 214.85, "end": 219.8, "dur": 4.95, "spk": 2, "seg_idx": 102}, "seg_103": {"start": 221.08, "end": 231.65, "dur": 10.57, "spk": 0, "seg_idx": 103}, "seg_104": {"start": 232.68, "end": 236.5, "dur": 3.82, "spk": 0, "seg_idx": 104}, "seg_105": {"start": 237.75, "end": 243.1, "dur": 5.35, "spk": 2, "seg_idx": 105}, "grp_2": {"start": 245.8, "end": 291.65, "dur": 45.85, "group": true, "scene_id": 7, "n": 8}, "seg_106": {"start": 245.8, "end": 250.3, "dur": 4.5, "spk": 0, "seg_idx": 106}, "seg_107": {"start": 251.55, "end": 254.1, "dur": 2.55, "spk": 0, "seg_idx": 107}, "seg_108": {"start": 255.2, "end": 266.25, "dur": 11.05, "spk": 0, "seg_idx": 108}, "seg_109": {"start": 267.35, "end": 270.3, "dur": 2.95, "spk": 3, "seg_idx": 109}, "seg_110": {"start": 271.7, "end": 275.5, "dur": 3.8, "spk": 0, "seg_idx": 110}, "seg_111": {"start": 276.3, "end": 282.95, "dur": 6.65, "spk": 4, "seg_idx": 111}, "seg_112": {"start": 284.3, "end": 288.25, "dur": 3.95, "spk": 0, "seg_idx": 112}, "seg_113": {"start": 289.08, "end": 291.65, "dur": 2.57, "spk": 3, "seg_idx": 113}};
 var AB_PREROLL = 0.25;
 var abPlayer=document.getElementById('ab-player'),abNow=document.getElementById('ab-now');
@@ -639,7 +760,7 @@ miniBtn.onclick=function(){
 };
 miniSeek.oninput=function(){if(miniAudio&&miniAudio.duration)miniAudio.currentTime=this.value/1000*miniAudio.duration;};
 
-/* (2b) spotlight: dim the other scene groups while section 3 is on screen */
+/* (2b) spotlight: dim the other scene groups while section 1 is on screen */
 var secAB=document.getElementById('sec-audiobook');
 if(secAB&&'IntersectionObserver' in window){
   new IntersectionObserver(function(es){
@@ -673,7 +794,7 @@ window.addEventListener('scroll',function(){
 },{passive:true});
 v2top.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});};
 
-/* (4) keep the playing segment of section 3 within the viewport */
+/* (4) keep the playing segment of section 1 within the viewport */
 var _abPlay=abPlay;
 abPlay=function(id){
   _abPlay(id);
@@ -697,7 +818,8 @@ abPlay=function(id){
   const tabs=[document.getElementById('dq-tab-bookcap'),document.getElementById('dq-tab-direct')];
   const panels=[document.getElementById('dq-bookcap-panel'),panel];
   const words={
-    zh:{intro:'本节展示 BookCap 与直接输入长音频的标注差异，BookCap按照对应流程，处理一个章节的长音频，Direct则是直接将一个章节的长音频输入给语音理解模型做caption；原音频约15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注来展示。',
+    zh:{intro:'本节对比 BookCap 与直接输入长音频的标注结果。BookCap 按照上述 Local-to-Global 流程处理完整章节；Direct 则将整章长音频一次性输入语音理解模型生成 caption。原音频约 15 分钟，出于展示篇幅考虑，本页选取其中约 4.9 分钟的音频及两种方法的对应标注。',
+      observationsTitle:'两种方法的主要差异：',observations:'BookCap 对音色特征以及语气、语速、停顿等演播细节的描述更具体；其场景划分覆盖更连续的叙事范围，场景描述更侧重整体氛围及其对演播方式的影响。相比之下，Direct 的场景描述更偏向文本剧情概括，与声学线索关联较小。',
       bookDesc:'保留原页面的句级标注与场景分组。',directDesc:'单次输入完整章节；本页仅展示与试听片段对应的预测标注，未提供参考转写、边界或说话人信息。',
       scenes:'展示场景',segments:'展示片段',speakers:'说话人 ID',predScenes:'展示预测场景',predSegments:'展示预测片段',predSpeakers:'展示预测说话人 ID',
       caveat:'BookCap 展示章节流程的对应标注；Direct 展示一次性处理完整章节后，在同一试听范围内的预测结果。两种方法保留各自的场景划分、片段边界与说话人编号，便于结合试听比较角色区分及音色、演播细节。本示例为定性展示，数量差异不代表准确率。',
@@ -707,7 +829,8 @@ abPlay=function(id){
       promptTitle:'查看完整 Prompt',rawTitle:'查看完整章节原始输出',downloadPrompt:'下载 Prompt',downloadRaw:'下载完整章节原始回复',downloadJson:'下载完整章节语法修复 JSON',
       scene:'场景',segment:'片段',speaker:'说话人',speakerChange:'说话人切换',transcript:'字幕',timbre:'音色',instruction:'指令',full:'完整试听片段',excerptTime:'试听',chapterTime:'章节',
       idle:'尚未播放',loading:'正在加载音频',playing:'正在播放',paused:'已暂停',ended:'播放结束',error:'无法播放，请检查本地音频路径或再次点击播放'},
-    en:{intro:'This section compares BookCap with direct long-audio captioning. BookCap processes an entire audiobook chapter through its pipeline, while Direct feeds the entire chapter directly into a speech understanding model for captioning. The original audio is approximately 15 minutes long; for brevity, this page presents an approximately 4.9-minute excerpt and the corresponding annotations from both methods.',
+    en:{intro:'This section compares BookCap with direct long-audio captioning. BookCap processes the complete chapter through the Local-to-Global pipeline described above; Direct submits the entire chapter to a speech understanding model in a single request to generate captions. The original audio is approximately 15 minutes long; for brevity, this page presents an approximately 4.9-minute excerpt with the corresponding annotations from both methods.',
+      observationsTitle:'Key differences between the two methods: ',observations:'BookCap provides more specific descriptions of timbre and delivery details, such as tone, speaking rate and pauses. Its scene grouping spans more continuous narrative passages, and its scene captions emphasize the overall atmosphere and its influence on delivery. In contrast, Direct scene captions focus more on summarizing the plot, with limited association with acoustic cues.',
       bookDesc:'The original sentence-level annotations and scene groups are preserved.',directDesc:'One request with the entire chapter; only predictions corresponding to the listening excerpt are shown. No reference transcript, boundaries or speaker annotations were provided.',
       scenes:'Displayed scenes',segments:'Displayed segments',speakers:'Speaker IDs',predScenes:'Displayed predicted scenes',predSegments:'Displayed predicted segments',predSpeakers:'Displayed predicted speaker IDs',
       caveat:'BookCap shows the corresponding annotations from its chapter-level pipeline; Direct shows predictions within the same listening window after processing the entire chapter in one request. Each method retains its own scene boundaries, segments and speaker IDs, allowing listening-based inspection of character distinction and timbre and delivery details. This is a qualitative demonstration; differences in counts do not indicate accuracy.',
@@ -858,7 +981,7 @@ abPlay=function(id){
       if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();selectTab(event.key==='Home'?0:event.key==='End'?1:1-index,true);}
     });
   });
-  I18N.zh.s3t='3. 有声书长音频 Caption 对照';I18N.en.s3t='3. Long-form Audiobook Caption Comparison';
+  I18N.zh.s3t='1. 有声书长音频 Caption 对照';I18N.en.s3t='1. Long-form Audiobook Caption Comparison';
   document.title='Local preview · '+document.title;
   function translate(){
     document.querySelectorAll('[data-dq-i18n]').forEach(el=>{el.textContent=t(el.dataset.dqI18n);});
